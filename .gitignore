@@ -1,0 +1,11 @@
+node_modules
+/coverage
+coverage
+build
+npm-debug.log
+.vscode
+.env
+.DS_Store
+dist
+/coverage.data
+/coverage/

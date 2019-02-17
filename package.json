@@ -1,0 +1,39 @@
+{
+  "name": "serve-imissyou",
+  "version": "1.0.0",
+  "description": "server to support imissyou",
+  "scripts": {
+    "start": "nodemon ./init.js --exec babel-node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhuddell/serve-imissyou.git"
+  },
+  "keywords": [
+    "node",
+    "social",
+    "server"
+  ],
+  "author": "dhuddell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dhuddell/serve-imissyou/issues"
+  },
+  "homepage": "https://github.com/dhuddell/serve-imissyou#readme",
+  "dependencies": {
+    "apollo-server": "^2.4.2",
+    "apollo-server-express": "^2.4.2",
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "graphql": "^14.1.1",
+    "graphql-cli": "^3.0.10",
+    "graphql-tag": "^2.10.1",
+    "graphql-tools": "^4.0.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^1.18.10",
+    "babel-register": "^6.26.0"
+  }
+}
