@@ -18,7 +18,7 @@ const friendModel = new mongoose.Schema({
     required: true,
   },
   friendScore: {
-    type: Float,
+    type: Number,
     required: true,
   },
 	targetGoals: {

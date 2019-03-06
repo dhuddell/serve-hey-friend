@@ -3,10 +3,10 @@ import { addMockFunctionsToSchema, makeExecutableSchema } from 'graphql-tools';
 import mocks from './mocks';
 
 import resolvers from './resolvers';
-import types from './types';
+import typeDefs from './types';
 
 const server = new ApolloServer({
-  typeDefs: types,
+  typeDefs,
   resolvers,
   playground: {
     endpoint: `http://localhost:4000/graphql`,
@@ -16,7 +16,7 @@ const server = new ApolloServer({
   }
 });
 
-const mockSchema = makeExecutableSchema({ typeDefs: types });
+const mockSchema = makeExecutableSchema({ typeDefs });
 
 addMockFunctionsToSchema({ schema: mockSchema, mocks });
 
