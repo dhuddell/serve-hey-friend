@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const goalSetModel = new mongoose.Schema({
+const goalSetSchema = new mongoose.Schema({
   cadence: {
     type: String,
     required: true,
@@ -23,4 +23,4 @@ const goalSetModel = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-export default goalSetModel;
+export default mongoose.model('GoalSet', goalSetSchema);

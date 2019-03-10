@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const goalSetModel = new mongoose.Schema({
+const goalSchema = new mongoose.Schema({
   goalType: {
     type: String,
     required: true,
@@ -12,7 +12,7 @@ const goalSetModel = new mongoose.Schema({
   goalSetId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'GoalSet',
-  }
+  },
 }, { timestamps: true });
 
-export default goalSetModel;
+export default mongoose.model('Goal', goalSchema);

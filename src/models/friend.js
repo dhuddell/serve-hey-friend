@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const friendModel = new mongoose.Schema({
+const friendSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -31,4 +31,4 @@ const friendModel = new mongoose.Schema({
 	},
 }, { timestamps: true });
 
-export default friendModel;
+export default mongoose.model('Friend', friendSchema);

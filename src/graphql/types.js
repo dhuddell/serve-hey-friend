@@ -32,17 +32,21 @@ const typeDefs = `
   }
 
   type User {
+    name: String!
     friends: [Friend]
     setting: String
   }
 
   type Query {
-    user: User
+    user(id: String!): User
+    users: [User]
     friend(id: String!): Friend
+    friends: [Friend]
   }
 
   type Mutation {
     updateTargetFriendGoals(id: String!, goals: GoalInputs): Friend
+    createUser(name: String!): User
   }
 `;
 
