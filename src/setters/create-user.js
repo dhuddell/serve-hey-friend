@@ -1,14 +1,15 @@
 import { User } from '../models';
 
-const createUser = ({ name }) => {
-  console.log('user creation resolver');
-  console.log(name);
-  return User.create({ name }).then((user) => ({
-      name: user.name,
-      friends: [{}],
-      setting: '',
-    }),
-  );
-}
+const createUser = (user) => {
+  return User.create({
+    name: user.name,
+    friends: user.friends,
+    setting: user.setting,
+  }).then((user) => ({
+    name: user.name,
+    friends: user.friends,
+    setting: user.setting,
+  }),
+)};
 
 export default createUser;

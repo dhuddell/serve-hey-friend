@@ -1,14 +1,8 @@
 import { Friend } from '../models';
 
 const getAllFriends = () => {
-  console.log('ALL friends RESOLVER');
-  Friend.find({}).exec().then((friends) => {
-    friends.forEach( (friend) => {
-      console.log(friend.toJSON());
-      console.log('');
-    });
-    return friends;
-  });
+  // good place to call a mapper!
+  return Friend.find().then((friends) => friends);
 };
 
 export default getAllFriends;

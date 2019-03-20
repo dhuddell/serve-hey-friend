@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-const friendSchema = new mongoose.Schema({
+export const friendSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -21,14 +21,36 @@ const friendSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-	targetGoals: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "GoalSet"
-	},
-	currentGoals: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "GoalSet"
-	},
+  goals: {
+    currentGoals: {
+      phone: {
+        type: String,
+        required: true,
+      },
+      text: {
+        type: String,
+        required: true,
+      },
+      beer: {
+        type: String,
+        required: true,
+      },
+    },
+    targetGoals: {
+      phone: {
+        type: String,
+        required: true,
+      },
+      text: {
+        type: String,
+        required: true,
+      },
+      beer: {
+        type: String,
+        required: true,
+      },
+    },
+  }
 }, { timestamps: true });
 
 export default mongoose.model('Friend', friendSchema);

@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-const userModel = new mongoose.Schema({
+export const UserSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -10,9 +10,9 @@ const userModel = new mongoose.Schema({
     required: false,
   },
 	friends: [{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Friend"
+		type: Schema.Types.ObjectId,
+		ref: "Friend",
 	}],
-}, { timestamps: true });
+});
 
-export default mongoose.model('User', userModel);
+export default mongoose.model('User', UserSchema);

@@ -17,9 +17,19 @@ const typeDefs = `
     cadence: String
   }
 
-  input GoalInputs {
+  input GoalsInput {
+    currentGoals: GoalSetInput
     targetGoals: GoalSetInput
     cadence: String
+  }
+
+  input FriendInput {
+    name: String!
+    icon: String
+    id: String
+    friendScore: Float
+    description: String
+    goals: GoalsInput
   }
 
   type Friend {
@@ -44,9 +54,15 @@ const typeDefs = `
     friends: [Friend]
   }
 
+  type StupidString {
+    lameIdiot: String
+  }
+
   type Mutation {
-    updateTargetFriendGoals(id: String!, goals: GoalInputs): Friend
+    updateTargetFriendGoals(id: String!, goals: GoalsInput): Friend
     createUser(name: String!): User
+    createFriend(friendInput: FriendInput!): Friend
+    removeFriends(ignoreString: String): StupidString
   }
 `;
 
