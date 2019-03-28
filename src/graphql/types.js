@@ -55,14 +55,19 @@ const typeDefs = `
   }
 
   type StupidString {
-    lameIdiot: String
+    updateMessage: String
   }
 
   type Mutation {
     updateTargetFriendGoals(id: String!, goals: GoalsInput): Friend
-    createUser(name: String!): User
+
     createFriend(friendInput: FriendInput!): Friend
+    removeFriend(friendId: String): StupidString
     removeFriends(ignoreString: String): StupidString
+
+    createUser(name: String!): User
+    removeUser(userId: String): StupidString
+    removeUsers(ignoreString: String): StupidString
   }
 `;
 

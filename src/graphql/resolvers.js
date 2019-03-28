@@ -7,9 +7,13 @@ const resolvers = {
     users: async (parent, args) => await getAllUsers(),
   },
   Mutation: {
-    createUser: (_, args) => createUser(args),
     createFriend: (_, args) => createFriend({ friend: args.friendInput }),
+    removeFriend: (_, args) => removeFriend(args),
     removeFriends: (_, args) => removeFriends(args),
+
+    createUser: (_, args) => createUser(args),
+    removeUser: (_, args) => removeUser(args),
+    removeUsers: (_, args) => removeUsers(args),
   },
 };
 
