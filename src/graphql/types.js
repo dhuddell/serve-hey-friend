@@ -17,9 +17,19 @@ const typeDefs = `
     cadence: String
   }
 
-  input GoalInputs {
+  input GoalsInput {
+    currentGoals: GoalSetInput
     targetGoals: GoalSetInput
     cadence: String
+  }
+
+  input FriendInput {
+    name: String!
+    icon: String
+    id: String
+    friendScore: Float
+    description: String
+    goals: GoalsInput
   }
 
   type Friend {
@@ -29,20 +39,45 @@ const typeDefs = `
     friendScore: Float
     description: String
     goals: Goals
+    userId: String
+  }
+
+  input UserInput {
+    username: String!
+    password: String!
+    name: String
+    setting: String
   }
 
   type User {
+    username: String!
+    password: String!
+    name: String
     friends: [Friend]
     setting: String
   }
 
   type Query {
-    user: User
+    user(id: String!): User
+    users: [User]
     friend(id: String!): Friend
+    friends: [Friend]
+  }
+
+  type StupidString {
+    updateMessage: String
   }
 
   type Mutation {
-    updateTargetFriendGoals(id: String!, goals: GoalInputs): Friend
+    updateTargetFriendGoals(id: String!, goals: GoalsInput): Friend
+
+    createFriend(friendInput: FriendInput!): Friend
+    removeFriend(friendId: String): StupidString
+    removeFriends(ignoreString: String): StupidString
+
+    createUser(userInput: UserInput!): User
+    removeUser(userId: String): StupidString
+    removeUsers(ignoreString: String): StupidString
   }
 `;
 

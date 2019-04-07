@@ -1,4 +1,9 @@
-export { default as userModel } from './user';
-export { default as friendModel } from './friend';
-export { default as goalModel } from './goal';
-export { default as goalSetModel } from './goal-set';
+export { default as User } from './user';
+export { default as Friend } from './friend';
+export { default as Goals } from './goals';
+export { default as GoalSet } from './goal-set';
+
+export { GoalSetSchema } from './goal-set';
+export { GoalsSchema } from './goals';
+export { FriendSchema } from './friend';
+export { UserSchema } from './user';

@@ -1,26 +1,22 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-const goalSetModel = new mongoose.Schema({
-  cadence: {
+export const GoalSetSchema = new Schema({
+	phone: {
     type: String,
     required: true,
   },
-	phoneGoal: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Goal"
+	text: {
+    type: String,
+    required: true,
   },
-	textGoal: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Goal"
-  },
-  beerGoal: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Goal"
+  beer: {
+    type: String,
+    required: true,
   },
   friendId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
 		ref: "Friend"
   },
-}, { timestamps: true });
+});
 
-export default goalSetModel;
+export default mongoose.model('GoalSet', GoalSetSchema);

@@ -1,14 +1,31 @@
-import axios from 'axios';
+import {
+  getAllUsers,
+  getAllFriends,
+} from '../getters';
+
+import {
+  createUser,
+  createFriend,
+  removeFriends,
+  removeUsers,
+} from '../setters';
+
+// FRIEND INPUT DOES NOT TAKE USERID YET.
+// IT'S NOT IN THE TYPE, SO WE CANT CONNECT YET ON FRIEND CREATION
 
 const resolvers = {
   Query: {
-    friend: (parent, args) => {
-      console.log('weve gotten to the resolver')
-    return axios.get(`www.apiurl.com/people`)
-    .then((response) => response.data)
-    .catch((error) => console.log('there was an error you see', error))
-    }
-  }
+    friends: () => getAllFriends(),
+    users: () => getAllUsers(),
+  },
+  Mutation: {
+    createFriend: async (_, args) => await createFriend(args),
+    removeFriend: (_, args) => removeFriend(args),
+    removeFriends: (_, args) => removeFriends(args),
+    createUser: async (_, args) => await createUser(args),
+    removeUser: (_, args) => removeUser(args),
+    removeUsers: (_, args) => removeUsers(args),
+  },
 };
 
 export default resolvers;
