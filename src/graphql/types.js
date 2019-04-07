@@ -39,10 +39,20 @@ const typeDefs = `
     friendScore: Float
     description: String
     goals: Goals
+    userId: String
+  }
+
+  input UserInput {
+    username: String!
+    password: String!
+    name: String
+    setting: String
   }
 
   type User {
-    name: String!
+    username: String!
+    password: String!
+    name: String
     friends: [Friend]
     setting: String
   }
@@ -65,7 +75,7 @@ const typeDefs = `
     removeFriend(friendId: String): StupidString
     removeFriends(ignoreString: String): StupidString
 
-    createUser(name: String!): User
+    createUser(userInput: UserInput!): User
     removeUser(userId: String): StupidString
     removeUsers(ignoreString: String): StupidString
   }

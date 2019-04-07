@@ -50,7 +50,11 @@ export const friendSchema = new Schema({
         required: true,
       },
     },
-  }
+  },
+  userId: { // i don't know how to do this yet.
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
 }, { timestamps: true });
 
 export default mongoose.model('Friend', friendSchema);

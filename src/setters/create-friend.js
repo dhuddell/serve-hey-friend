@@ -1,10 +1,14 @@
+import uuidv1 from 'uuid/v1';
 import { Friend } from '../models';
 
-const createFriend = ({ friend }) => {
+const createFriend = async ( input ) => {
+  let friendId = uuidv1();
+  const friend = input.friendInput
+
   const newFriend = new Friend({
     name: friend.name,
     icon: friend.icon,
-    id: friend.id,
+    id: friendId,
     friendScore: friend.friendScore,
     description: friend.description,
     goals: {
@@ -20,10 +24,20 @@ const createFriend = ({ friend }) => {
       },
       candence: friend.goals.candence
     },
+    userId: friend.userId, // need to get and pass userId from client
   })
 
-  newFriend.save();
-  return Friend.find({ name: friend.name }).then((friend) => friend); // need to remap it back to values.
+  await newFriend.save();
+  return Friend.findOne({ id: friendId })
+    .then((friendo) => ({
+      name: friendo.name,
+      icon: friendo.icon,
+      id: friendo.id,
+      friendoScore: friendo.friendScore,
+      description: friendo.description,
+      goals: friendo.goals,
+      userId: friendo.userId, // this still isn't being set.
+  }));
 };
 
 export default createFriend;
