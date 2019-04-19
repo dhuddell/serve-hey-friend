@@ -1,8 +1,8 @@
-import { Friend } from '../models';
+// import { Friend } from '../schemas';
 
-const removeFriends = () => {
-  Friend.deleteMany({}, () => {});
-  return { updateMessage: "literally thanos'ed your friends"}
-};
+// const removeFriends = () => {
+//   Friend.deleteMany({}, () => {});
+//   return { updateMessage: "literally thanos'ed your friends"}
+// };
 
-export default removeFriends;
+// export default removeFriends;

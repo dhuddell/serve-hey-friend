@@ -1,3 +1,3 @@
-import { User } from '../models';
+// import { User } from '../schemas';
 
-export default () => User.find();
+// export default () => User.find();

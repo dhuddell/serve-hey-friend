@@ -1,3 +1,3 @@
-import { Friend } from '../models';
+// import { Friend } from '../schemas';
 
-export default () => Friend.find();
+// export default () => Friend.find();

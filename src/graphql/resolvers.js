@@ -4,8 +4,8 @@ import {
 } from '../getters';
 
 import {
-  createUser,
-  createFriend,
+  registerUser,
+  addFriendToUser,
   removeFriends,
   removeUsers,
 } from '../setters';
@@ -19,10 +19,10 @@ const resolvers = {
     users: () => getAllUsers(),
   },
   Mutation: {
-    createFriend: async (_, args) => await createFriend(args),
+    addFriendToUser: async (_, args) => await addFriendToUser(args),
     removeFriend: (_, args) => removeFriend(args),
     removeFriends: (_, args) => removeFriends(args),
-    createUser: async (_, args) => await createUser(args),
+    registerUser: async (_, args) => await registerUser(args),
     removeUser: (_, args) => removeUser(args),
     removeUsers: (_, args) => removeUsers(args),
   },

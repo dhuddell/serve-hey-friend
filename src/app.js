@@ -1,11 +1,15 @@
 import mongoose from 'mongoose';
 import express from 'express';
 import server from './graphql/schema';
+import cors from 'cors';
 
 const app = express();
 server.applyMiddleware({ // graphql
   app
 });
+
+
+app.use(cors());
 
 const PORT = 4000 || process.env;
 app.listen(PORT, () => {
@@ -14,7 +18,7 @@ app.listen(PORT, () => {
 });
 
 
-mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/serve-i-miss-you', {useNewUrlParser: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {

@@ -1,7 +1,7 @@
-import { User } from '../models';
+import UserModel from '../schemas/user-model';
 
 const removeUsers = () => {
-  User.deleteMany({}, () => {});
+  UserModel.deleteMany({}, () => {});
   return { updateMessage: "literally thanos'ed your users"}
 };
 
