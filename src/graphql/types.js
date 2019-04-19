@@ -11,13 +11,13 @@ const typeDefs = `
     beer: String
   }
 
-  type Goals {
+  type GoalSetCollection {
     currentGoals: GoalSet
     targetGoals: GoalSet
     cadence: String
   }
 
-  input GoalsInput {
+  input GoalSetCollectionInput {
     currentGoals: GoalSetInput
     targetGoals: GoalSetInput
     cadence: String
@@ -26,20 +26,19 @@ const typeDefs = `
   input FriendInput {
     name: String!
     icon: String
-    id: String
+    nickname: String
     friendScore: Float
     description: String
-    goals: GoalsInput
+    goalSetCollection: GoalSetCollectionInput
   }
 
   type Friend {
     name: String
     icon: String
-    id: String
+    nickname: String
     friendScore: Float
     description: String
-    goals: Goals
-    userId: String
+    goalSetCollection: GoalSetCollection
   }
 
   input UserInput {
@@ -69,13 +68,13 @@ const typeDefs = `
   }
 
   type Mutation {
-    updateTargetFriendGoals(id: String!, goals: GoalsInput): Friend
+    updateTargetFriendGoals(id: String!, goalSetCollection: GoalSetCollectionInput): Friend
 
-    createFriend(friendInput: FriendInput!): Friend
+    addFriendToUser(friendInput: FriendInput!): Friend
     removeFriend(friendId: String): StupidString
     removeFriends(ignoreString: String): StupidString
 
-    createUser(userInput: UserInput!): User
+    registerUser(userInput: UserInput!): User
     removeUser(userId: String): StupidString
     removeUsers(ignoreString: String): StupidString
   }

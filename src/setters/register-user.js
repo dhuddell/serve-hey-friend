@@ -1,5 +1,6 @@
+import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import { User } from '../models';
+import UserModel from '../schemas/user-model';
 
 const hashPassword = ( pw ) => {
   const saltRounds = 10;
@@ -14,22 +15,24 @@ const setUserReturn = (user, pw) => ({
   setting: user.setting,
 });
 
-const createUser = async ( input ) => {
-  let userOutput;
+const registerUser = async ( input ) => {
+  // let userOutput;
   const user = input.userInput;
   const hashedPassword = await hashPassword(user.password);
 
-  await User.create({
+  return await UserModel.create({ // remove await here??
+    _id: new mongoose.Types.ObjectId(),
     username: user.username,
     password: hashedPassword,
     name: user.name,
-    friends: user.friends,
     setting: user.setting,
-  }).then(() => {
-    userOutput = setUserReturn(user, hashedPassword)
-  });
+  }).then((user) => user);
 
-  return userOutput;
+  // }).then((user) => {
+  //   userOutput = setUserReturn(user, hashedPassword)
+  // });
+
+  // return userOutput;
 };
 
-export default createUser;
+export default registerUser;
