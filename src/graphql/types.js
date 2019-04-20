@@ -30,6 +30,7 @@ const typeDefs = `
     friendScore: Float
     description: String
     goalSetCollection: GoalSetCollectionInput
+    userName: String
   }
 
   type Friend {
