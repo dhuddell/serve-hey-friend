@@ -7,32 +7,24 @@ const hashPassword = ( pw ) => {
   return bcrypt.hash(pw, saltRounds);
 };
 
-const setUserReturn = (user, pw) => ({
-  username: user.username,
-  password: pw,
-  name: user.name,
-  friends: user.friends,
-  setting: user.setting,
-});
-
 const registerUser = async ( input ) => {
-  // let userOutput;
   const user = input.userInput;
+
+  let usernameTaken;
+  await UserModel.find({}, (err, users) => {
+    usernameTaken = users.some((userBoi) => userBoi.username === user.username)
+  });
+
+  if (usernameTaken) throw new Error('Username taken!');
   const hashedPassword = await hashPassword(user.password);
 
-  return await UserModel.create({ // remove await here??
+  return UserModel.create({
     _id: new mongoose.Types.ObjectId(),
     username: user.username,
     password: hashedPassword,
     name: user.name,
     setting: user.setting,
   }).then((user) => user);
-
-  // }).then((user) => {
-  //   userOutput = setUserReturn(user, hashedPassword)
-  // });
-
-  // return userOutput;
 };
 
 export default registerUser;

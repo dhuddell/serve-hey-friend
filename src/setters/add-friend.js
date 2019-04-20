@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import UserModel from '../schemas/user-model';
 
-const createFriendObject = (friend) => ({
+const createFriendObject = ( friend ) => ({
   _id: new mongoose.Types.ObjectId(),
   name: friend.name,
   icon: friend.icon,
