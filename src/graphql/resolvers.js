@@ -1,5 +1,7 @@
 import {
+  getOneUser,
   getAllUsers,
+  getOneFriend,
   getAllFriends,
 } from '../getters';
 
@@ -10,12 +12,11 @@ import {
   removeUsers,
 } from '../setters';
 
-// FRIEND INPUT DOES NOT TAKE USERID YET.
-// IT'S NOT IN THE TYPE, SO WE CANT CONNECT YET ON FRIEND CREATION
-
 const resolvers = {
   Query: {
-    friends: () => getAllFriends(),
+    friend: (_, args) => getOneFriend(args),
+    friends: (_, args) => getAllFriends(args),
+    user: (_, args) => getOneUser(args),
     users: (_, args) => getAllUsers(args),
   },
   Mutation: {

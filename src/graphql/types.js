@@ -34,7 +34,7 @@ const typeDefs = `
   }
 
   type Friend {
-    _id: String
+    friendId: String
     name: String
     icon: String
     nickname: String
