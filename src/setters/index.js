@@ -1,4 +1,4 @@
-export { default as addFriendToUser } from './add-friend';
+export { default as addFriendToUser } from './add-friend-to-user';
 // export { default as removeFriend } from './remove-friend';
 // export { default as removeFriends } from './remove-friends';
 
