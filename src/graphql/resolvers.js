@@ -1,31 +1,33 @@
 import {
-  getOneUser,
+  getUser,
   getAllUsers,
-  getOneFriend,
+  getFriend,
   getAllFriends,
 } from '../getters';
 
 import {
   registerUser,
+  removeUser,
+  removeAllUsers,
   addFriendToUser,
-  removeFriends,
-  removeUsers,
+  removeFriend,
+  removeAllFriends,
 } from '../setters';
 
 const resolvers = {
   Query: {
-    friend: (_, args) => getOneFriend(args),
+    friend: (_, args) => getFriend(args),
     friends: (_, args) => getAllFriends(args),
-    user: (_, args) => getOneUser(args),
+    user: (_, args) => getUser(args),
     users: (_, args) => getAllUsers(args),
   },
   Mutation: {
-    addFriendToUser: async (_, args) => await addFriendToUser(args),
-    removeFriend: (_, args) => removeFriend(args),
-    removeFriends: (_, args) => removeFriends(args),
     registerUser: async (_, args) => await registerUser(args),
     removeUser: (_, args) => removeUser(args),
-    removeUsers: (_, args) => removeUsers(args),
+    removeAllUsers: (_, args) => removeAllUsers(args),
+    addFriendToUser: async (_, args) => await addFriendToUser(args),
+    removeFriend: (_, args) => removeFriend(args),
+    removeAllFriends: (_, args) => removeAllFriends(args),
   },
 };
 

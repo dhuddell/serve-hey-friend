@@ -75,12 +75,12 @@ const typeDefs = gql`
     updateTargetFriendGoals(username: String!, goalSetCollection: GoalSetCollectionInput): Friend
 
     addFriendToUser(friendInput: FriendInput!): Friend
-    removeFriend(friendId: String): StupidString
-    removeFriends(ignoreString: String): StupidString
+    removeFriend(username: String!, friendId: String!): StupidString
+    removeAllFriends(username: String!): StupidString
 
     registerUser(userInput: UserInput!): User
     removeUser(userId: String): StupidString
-    removeUsers(ignoreString: String): StupidString
+    removeAllUsers(ignoreString: String): StupidString
   }
 `;
 
