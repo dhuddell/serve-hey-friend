@@ -1,6 +1,6 @@
 import UserModel from '../schemas/user-model';
 
-export const getOneUser = () => UserModel.findOne({ username }).then((user) => user);
+export const getOneUser = ({ username }) => UserModel.findOne({ username }).then((user) => user);
 export const getAllUsers = () => UserModel.find();
 
 export const getAllFriends = ({ username }) => {

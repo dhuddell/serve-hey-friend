@@ -59,7 +59,7 @@ const typeDefs = `
   }
 
   type Query {
-    user(id: String!): User
+    user(username: String!): User
     users: [User]
     friend(username: String!, friendId: String!): Friend
     friends(username: String!): [Friend]
@@ -70,7 +70,7 @@ const typeDefs = `
   }
 
   type Mutation {
-    updateTargetFriendGoals(id: String!, goalSetCollection: GoalSetCollectionInput): Friend
+    updateTargetFriendGoals(username: String!, goalSetCollection: GoalSetCollectionInput): Friend
 
     addFriendToUser(friendInput: FriendInput!): Friend
     removeFriend(friendId: String): StupidString

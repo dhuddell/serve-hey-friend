@@ -6,7 +6,7 @@ const friendSchema = new Schema({
   name: String,
   description: String,
   icon: String,
-  nickname: String, // used for url
+  nickname: String,
   friendScore: Number,
   goalSetCollection: GoalSetCollectionSchema,
 }, { timestamps: true });
