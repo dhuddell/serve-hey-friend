@@ -1,4 +1,4 @@
-import UserModel from '../schemas/user-model';
+import UserModel from './schemas/user-model';
 
 export const getOneUser = ({ username }) => UserModel.findOne({ username }).then((user) => user);
 export const getAllUsers = () => UserModel.find();
