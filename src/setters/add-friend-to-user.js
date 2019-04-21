@@ -3,6 +3,7 @@ import UserModel from '../schemas/user-model';
 
 const createFriendObject = ( friend ) => ({
   _id: new mongoose.Types.ObjectId(),
+  username: friend.username,
   name: friend.name,
   icon: friend.icon,
   friendScore: friend.friendScore,
@@ -25,14 +26,12 @@ const createFriendObject = ( friend ) => ({
 
 const addFriendToUser = async ( input ) => {
   const friendObject = createFriendObject(input.friendInput);
-  return UserModel.findOne({ _id: "5cba36b29da43e24336f9eb7" }).then((user) => {
+  return UserModel.findOne({ username: friendObject.username }).then((user) => {
     user.friends.push(friendObject);
     return user.save().then((user) => {
-      return user.friends.find(
-        (friend) => friend._id === friendObject._id);
+      return user.friends.find((friend) => friend._id === friendObject._id);
     });
   });
 };
-
 
 export default addFriendToUser;
