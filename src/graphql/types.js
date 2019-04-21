@@ -1,4 +1,6 @@
-const typeDefs = `
+import gql from 'graphql-tag';
+
+const typeDefs = gql`
   type GoalSet {
     phone: String
     text: String
@@ -34,7 +36,7 @@ const typeDefs = `
   }
 
   type Friend {
-    _id: String
+    friendId: String
     name: String
     icon: String
     nickname: String
@@ -59,26 +61,22 @@ const typeDefs = `
   }
 
   type Query {
-    user(id: String!): User
+    user(username: String!): User
     users: [User]
-    friend(id: String!): Friend
-    friends: [Friend]
-  }
-
-  type StupidString {
-    updateMessage: String
+    friend(username: String!, friendId: String!): Friend
+    friends(username: String!): [Friend]
   }
 
   type Mutation {
-    updateTargetFriendGoals(id: String!, goalSetCollection: GoalSetCollectionInput): Friend
+    updateTargetFriendGoals(username: String!, goalSetCollection: GoalSetCollectionInput): Friend
 
     addFriendToUser(friendInput: FriendInput!): Friend
-    removeFriend(friendId: String): StupidString
-    removeFriends(ignoreString: String): StupidString
+    removeFriend(username: String!, friendId: String!): String
+    removeAllFriends(username: String!): String
 
     registerUser(userInput: UserInput!): User
-    removeUser(userId: String): StupidString
-    removeUsers(ignoreString: String): StupidString
+    removeUser(username: String): String
+    removeAllUsers: String
   }
 `;
 

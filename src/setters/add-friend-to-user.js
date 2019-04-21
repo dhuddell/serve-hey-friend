@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import uuidv1 from 'uuid/v1';
 import UserModel from '../schemas/user-model';
 
 const createFriendObject = ( friend ) => ({
-  _id: new mongoose.Types.ObjectId(),
+  friendId: uuidv1(),
   username: friend.username,
   name: friend.name,
   icon: friend.icon,
@@ -29,7 +29,7 @@ const addFriendToUser = async ( input ) => {
   return UserModel.findOne({ username: friendObject.username }).then((user) => {
     user.friends.push(friendObject);
     return user.save().then((user) => {
-      return user.friends.find((friend) => friend._id === friendObject._id);
+      return user.friends.find((friend) => friend.friendId === friendObject.friendId);
     });
   });
 };
