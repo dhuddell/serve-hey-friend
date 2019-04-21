@@ -67,20 +67,16 @@ const typeDefs = gql`
     friends(username: String!): [Friend]
   }
 
-  type StupidString {
-    updateMessage: String
-  }
-
   type Mutation {
     updateTargetFriendGoals(username: String!, goalSetCollection: GoalSetCollectionInput): Friend
 
     addFriendToUser(friendInput: FriendInput!): Friend
-    removeFriend(username: String!, friendId: String!): StupidString
-    removeAllFriends(username: String!): StupidString
+    removeFriend(username: String!, friendId: String!): String
+    removeAllFriends(username: String!): String
 
     registerUser(userInput: UserInput!): User
-    removeUser(userId: String): StupidString
-    removeAllUsers(ignoreString: String): StupidString
+    removeUser(username: String): String
+    removeAllUsers: String
   }
 `;
 

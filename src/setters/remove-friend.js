@@ -2,9 +2,9 @@ import UserModel from '../schemas/user-model';
 
 const removeFriend = ({ username, friendId }) => {
   return UserModel.findOne({ username }).then((user) => {
-    const friendToRemove = user.friends.find((friend) => friend.friendId === friendId);
-    user.friends.splice(user.friends.indexOf(friendToRemove), 1);
-    return user.save().then(() => ({ updateMessage: `literally Thanos'ed friend with name ${friendToRemove.name}.`}));
+    const deletedFriend = user.friends.find((friend) => friend.friendId === friendId);
+    user.friends.splice(user.friends.indexOf(deletedFriend), 1);
+    return user.save().then(() => `literally Thanos'ed friend named ${deletedFriend.name}.`);
   });
 };
 
