@@ -61,8 +61,8 @@ const typeDefs = `
   type Query {
     user(id: String!): User
     users: [User]
-    friend(id: String!): Friend
-    friends: [Friend]
+    friend(username: String!, friendId: String!): Friend
+    friends(username: String!): [Friend]
   }
 
   type StupidString {

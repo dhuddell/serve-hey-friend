@@ -16,7 +16,7 @@ import {
 const resolvers = {
   Query: {
     friends: () => getAllFriends(),
-    users: () => getAllUsers(),
+    users: (_, args) => getAllUsers(args),
   },
   Mutation: {
     addFriendToUser: async (_, args) => await addFriendToUser(args),
