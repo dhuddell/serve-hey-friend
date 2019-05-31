@@ -8,6 +8,7 @@ import {
   addFriendToUser,
   removeFriends,
   removeUsers,
+  loginUser,
 } from '../setters';
 
 // FRIEND INPUT DOES NOT TAKE USERID YET.
@@ -19,12 +20,13 @@ const resolvers = {
     users: () => getAllUsers(),
   },
   Mutation: {
-    addFriendToUser: async (_, args) => await addFriendToUser(args),
-    removeFriend: (_, args) => removeFriend(args),
-    removeFriends: (_, args) => removeFriends(args),
-    registerUser: async (_, args) => await registerUser(args),
-    removeUser: (_, args) => removeUser(args),
-    removeUsers: (_, args) => removeUsers(args),
+    registerUser: (_, args) => registerUser(args),
+    loginUser: (_, args ) => loginUser(args),
+    addFriendToUser: (_, args, { headers }) => addFriendToUser(args, headers),
+    removeFriend: (_, args, { headers }) => removeFriend(args),
+    removeFriends: (_, args, { headers }) => removeFriends(args),
+    removeUser: (_, args, { headers }) => removeUser(args),
+    removeUsers: (_, args, { headers }) => removeUsers(args),
   },
 };
 

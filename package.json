@@ -31,6 +31,7 @@
     "graphql-cli": "^3.0.11",
     "graphql-tag": "^2.10.1",
     "graphql-tools": "^4.0.4",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.4.13",
     "uuid": "^3.3.2"
   },

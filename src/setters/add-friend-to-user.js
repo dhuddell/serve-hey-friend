@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import checkAuthorization from '../helpers/authHelper';
 import UserModel from '../schemas/user-model';
 
 const createFriendObject = ( friend ) => ({
@@ -24,7 +25,10 @@ const createFriendObject = ( friend ) => ({
   },
 });
 
-const addFriendToUser = async ( input ) => {
+const addFriendToUser = async ( input, headers ) => {
+  const isAuthorized = checkAuthorization(headers);
+  if(!isAuthorized) throw new Error('User is not logged in (or authenticated).');
+
   const friendObject = createFriendObject(input.friendInput);
   return UserModel.findOne({ username: friendObject.username }).then((user) => {
     user.friends.push(friendObject);
