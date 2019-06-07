@@ -5,6 +5,7 @@ import UserModel from '../schemas/user-model';
 const loginUser = async ( input ) => {
   const { username, password } = input.userInput;
   const user = await UserModel.findOne({ username: username });
+  if(!user) return { message: 'User not found.' };
 
   const match = await bcrypt.compare(password, user.password);
   if(match) {
