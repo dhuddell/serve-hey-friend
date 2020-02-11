@@ -21,12 +21,17 @@ const resolvers = {
   },
   Mutation: {
     registerUser: (_, args) => registerUser(args),
-    loginUser: (_, args ) => loginUser(args),
+    loginUser: (_, args, context ) => loginUser(args, context),
     addFriendToUser: (_, args, { headers }) => addFriendToUser(args, headers),
     removeFriend: (_, args, { headers }) => removeFriend(args),
     removeFriends: (_, args, { headers }) => removeFriends(args),
     removeUser: (_, args, { headers }) => removeUser(args),
     removeUsers: (_, args, { headers }) => removeUsers(args),
+  },
+  MutationResponse: {
+    __resolveType(mutationResponse, context, info){
+      return null;
+    },
   },
 };
 

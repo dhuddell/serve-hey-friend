@@ -11,7 +11,7 @@ server.applyMiddleware({ // graphql
 
 app.use(cors());
 
-const PORT = 4000 || process.env;
+const PORT = 3001 || process.env;
 app.listen(PORT, () => {
   console.log(`The server has started on port: ${PORT}`);
   console.log(`http://localhost:${PORT}/graphql`);
