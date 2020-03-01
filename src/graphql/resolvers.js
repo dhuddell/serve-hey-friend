@@ -1,4 +1,5 @@
 import {
+  getUser,
   getAllUsers,
   getAllFriends,
 } from '../getters';
@@ -13,25 +14,20 @@ import {
 
 // FRIEND INPUT DOES NOT TAKE USERID YET.
 // IT'S NOT IN THE TYPE, SO WE CANT CONNECT YET ON FRIEND CREATION
-
 const resolvers = {
   Query: {
-    friends: () => getAllFriends(),
-    users: () => getAllUsers(),
+    user: (_, args, context) => getUser(args, context),
+    users: (_, args, context) => getAllUsers(args, context),
+    friends: (_, args, context) => getAllFriends(args, context),
   },
   Mutation: {
-    registerUser: (_, args) => registerUser(args),
-    loginUser: (_, args, context ) => loginUser(args, context),
-    addFriendToUser: (_, args, { headers }) => addFriendToUser(args, headers),
-    removeFriend: (_, args, { headers }) => removeFriend(args),
-    removeFriends: (_, args, { headers }) => removeFriends(args),
-    removeUser: (_, args, { headers }) => removeUser(args),
-    removeUsers: (_, args, { headers }) => removeUsers(args),
-  },
-  MutationResponse: {
-    __resolveType(mutationResponse, context, info){
-      return null;
-    },
+    registerUser: (_, args, context) => registerUser(args, context),
+    loginUser: (_, args, context) => loginUser(args, context),
+    addFriendToUser: (_, args, context) => addFriendToUser(args, context),
+    removeFriend: (_, args, context) => removeFriend(args, context),
+    removeFriends: (_, args, context) => removeFriends(args, context),
+    removeUser: (_, args, context) => removeUser(args, context),
+    removeUsers: (_, args, context) => removeUsers(args, context),
   },
 };
 

@@ -1,9 +1,8 @@
-import jwt from 'jsonwebtoken';
+import { AuthenticationError } from 'apollo-server';
+import validateToken from '../helpers/validate-token';
 
-// need to test this token with postman.
-
-export default (headers) => {
-  console.log(headers)
-  return jwt.verify(headers.token, 'tempi is a dog');
+export default ( username, token ) => {
+  const validationResponse = validateToken(username, token);
+  if (!validationResponse.isValidToken)
+    throw new AuthenticationError('you must be logged in'); 
 };
-

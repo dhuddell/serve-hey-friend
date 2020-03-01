@@ -5,8 +5,6 @@ import typeDefs from './types';
 
 const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT || `/graphql`;
 
-const nameReqs = (thing) => {console.log(thing)};
-
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 const server = new ApolloServer({
   schema,
@@ -16,10 +14,10 @@ const server = new ApolloServer({
       'editor.theme': 'light'
     }
   },
-  context: ({req, res}) => ({
-    headers: req.headers,
-    logThings: nameReqs,
-  }),
+  context: ({ req }) => {
+    const token = req.headers.authorization;
+    return {token };
+  },
 });
 
 export default server;

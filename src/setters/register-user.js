@@ -9,37 +9,33 @@ const hashPassword = ( pw ) => {
 };
 
 const registerUser = async ( input ) => {
-  const user = input.registrationInput;
+  const { username, password } = input.registrationInput;
 
-  console.log(input)
   let usernameTaken;
   await UserModel.find({}, (err, users) => {
-    usernameTaken = users.some((userBoi) => userBoi.username === user.username)
+    usernameTaken = users.some((userBoi) => userBoi.username === username)
   });
 
   if (usernameTaken) return {
-    code: '200',
-    success: false,
     message:'That username is already taken, please choose again.',
-    username: user.username
+    username,
   };
 
-  const hashedPassword = await hashPassword(user.password);
+  const hashedPassword = await hashPassword(password);
+  const token = jwt.sign({ username }, 'tempi is a dog');
 
   const userResult = await UserModel.create({
     _id: new mongoose.Types.ObjectId(),
-    username: user.username,
+    username: username,
     password: hashedPassword,
     message: 'Placeholder message'
   });
 
-  const token = jwt.sign({ foo: 'bar' }, 'tempi is a dog');
+  userResult.save();
   return {
-    code: '200',
-    success: true,
     message: 'User created successfully!',
     token,
-    username: user.username,
+    username,
   }
 };
 

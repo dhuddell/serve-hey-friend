@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import GoalSetCollectionSchema from './goalSetCollection';
+import GoalSetCollectionSchema from './goal-set-collection';
 
 const friendSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,

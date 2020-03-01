@@ -9,7 +9,10 @@ server.applyMiddleware({ // graphql
 });
 
 
-app.use(cors());
+app.use(cors({
+  origin: 'localhost:3000',
+  credentials: true,
+}));
 
 const PORT = 3001 || process.env;
 app.listen(PORT, () => {
@@ -22,7 +25,7 @@ mongoose.connect('mongodb://localhost:27017/serve-i-miss-you', {useNewUrlParser:
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  // we're connected!
+  // we're connected to the Data-bizzle
 });
 
 export default app;

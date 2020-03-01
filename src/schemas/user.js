@@ -5,7 +5,6 @@ const UserSchema = new Schema({
   _id: mongoose.Types.ObjectId,
   username: String,
   password: String,
-  message: String,
   name: String,
   setting: String,
 	friends: [FriendSchema],

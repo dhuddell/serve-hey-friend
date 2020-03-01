@@ -25,6 +25,7 @@ const createFriendObject = ( friend ) => ({
   },
 });
 
+// Doesn't need to be async??
 const addFriendToUser = async ( input, headers ) => {
   const isAuthorized = checkAuthorization(headers);
   if(!isAuthorized) throw new Error('User is not logged in (or authenticated).');
