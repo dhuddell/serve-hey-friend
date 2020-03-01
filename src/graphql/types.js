@@ -34,18 +34,18 @@ export default gql`
   input FriendInput {
     name: String!
     icon: String
-    friendScore: Float
+    friendScore: Int!
     description: String
     goalSetCollection: GoalSetCollectionInput
     username: String!
   }
 
   type Friend {
-    friendId: String
+    username: String
     name: String
     icon: String
     description: String
-    friendScore: Float
+    friendScore: Int
     goalSetCollection: GoalSetCollection
   }
 
@@ -64,7 +64,6 @@ export default gql`
     password: String!
     name: String
     friends: [Friend]
-    setting: String
   }
 
   type AuthResponse {
@@ -76,7 +75,7 @@ export default gql`
   type Query {
     user(username: String!): User
     users: [User]
-    friend(username: String!, friendId: String!): Friend
+    friend(username: String!, name: String!): Friend
     friends: [Friend]
   }
 

@@ -1,5 +1,5 @@
 import { AuthenticationError } from 'apollo-server';
-import validateToken from '../helpers/validate-token';
+import validateToken from './validate-token';
 
 export default ( username, token ) => {
   const validationResponse = validateToken(username, token);

@@ -33,6 +33,7 @@
     "graphql-tools": "^4.0.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.4.13",
+    "ramda": "^0.27.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

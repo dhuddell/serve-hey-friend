@@ -1,8 +1,8 @@
 import { UserModel } from '../schemas';
-import authHelper from '../helpers/authHelper';
+import authorizeUser from '../helpers/authorize-user';
 
 export default ( { username }, { token } ) => {
-  authHelper(username, token)
+  authorizeUser(username, token)
 
   const userBoi = UserModel.findOne({ username }).then((user) => user);
   return userBoi;
