@@ -7,9 +7,12 @@ import {
 
 import {
   registerUser,
+  removeUser,
+  removeAllUsers,
   addFriendToUser,
   removeFriends,
   removeUsers,
+  removeFriend,
   loginUser,
 } from '../setters';
 

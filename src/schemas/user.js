@@ -8,6 +8,6 @@ const UserSchema = new Schema({
   name: String,
   setting: String,
 	friends: [FriendSchema],
-});
+}, { timestamps: true });
 
 export default UserSchema;
