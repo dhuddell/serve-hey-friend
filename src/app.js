@@ -8,7 +8,6 @@ server.applyMiddleware({ // graphql
   app
 });
 
-
 app.use(cors({
   origin: 'localhost:3000',
   credentials: true,

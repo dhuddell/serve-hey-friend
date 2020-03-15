@@ -1,23 +1,31 @@
 import R from 'ramda';
+import { UserInputError } from 'apollo-server';
 import authorizeUser from '../helpers/authorize-user';
 import createFriend from './create-friend';
 import UserModel from '../schemas/user-model';
 
-const addFriendToUser = ( requestInput, headers ) => {
+const addFriendToUser = async ( requestInput, headers ) => {
   const { friendInput: {
     username,
     name,
     icon,
     friendScore,
-    nickname,
     description,
     goalSetCollection
-    } 
+    } = {}
   } = requestInput;
+
+  // TODO 3/6/2020 clean up friendInput assignment
+
+  const user = await UserModel.findOne({ username })
+  if (!user) throw new UserInputError('User not found');
   
   authorizeUser(username, headers.token)
   
-  const currentGoals = R.pathOr({}, [ 'currentGoals'], goalSetCollection)
+  const nameIsTaken = user.friends.find((friend) => friend.name === name);
+  if (nameIsTaken) throw new UserInputError('Friend name taken, please choose another name');
+  
+  const currentGoals = R.pathOr({}, ['currentGoals'], goalSetCollection)
   const targetGoals = R.pathOr({}, ['targetGoals'], goalSetCollection)
   const cadence = R.pathOr({}, ['cadence'], goalSetCollection)
 
@@ -35,14 +43,11 @@ const addFriendToUser = ( requestInput, headers ) => {
     },
   }
 
-  const friendObject = createFriend(friendInput);
+  const friendObject = createFriend(friendInput);  
+  await user.friends.push(friendObject);
+  await user.save()
 
-  return UserModel.findOne({ username: friendObject.username }).then((user) => {
-    user.friends.push(friendObject);
-    return user.save().then((user) => {
-      return user.friends.find((friend) => friend._id === friendObject._id);
-    });
-  });
+  return user.friends.id(friendObject._id);
 };
 
 export default addFriendToUser;
