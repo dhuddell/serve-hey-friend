@@ -8,8 +8,13 @@ const getFriends = async ( { username }, { token } ) => {
 
   authorizeUser(username, token)
 
-  const friends = Array.from(user.friends);
-  
+  const friends = Array
+    .from(user.friends)
+    .map((friend) => {
+      friend.id = friend._id;
+      return friend
+    });
+
   return friends;
 };
 

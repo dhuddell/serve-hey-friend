@@ -22,7 +22,11 @@ const registerUser = async ( input ) => {
   };
 
   const hashedPassword = await hashPassword(password);
-  const token = jwt.sign({ username }, 'tempi is a dog');
+  const token = jwt.sign(
+    { username },
+    'tempi is a dog',
+    { expiresIn: '2h' }
+  );
 
   const userResult = await UserModel.create({
     _id: new mongoose.Types.ObjectId(),

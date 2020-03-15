@@ -12,7 +12,12 @@ const loginUser = async ( input ) => {
 
   const match = await bcrypt.compare(password, user.password);
   if (match) {
-      var token = jwt.sign({ username }, 'tempi is a dog');
+      const token = jwt.sign(
+        { username },
+        'tempi is a dog',
+        { expiresIn: '2h' }
+      );
+
       return {
         message:'Login successful!',
         username,

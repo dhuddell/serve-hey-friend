@@ -1,19 +1,19 @@
 import {
   getUser,
   getFriend,
-  getAllUsers,
+  // getUsers,
   getFriends,
 } from '../getters';
 
 import {
+  loginUser,
   registerUser,
-  removeUser,
-  removeAllUsers,
   addFriendToUser,
-  removeFriends,
+  // removeFriendFromUser,
+  removeUser,
   removeUsers,
   removeFriend,
-  loginUser,
+  removeFriends,
 } from '../setters';
 
 const resolvers = {
