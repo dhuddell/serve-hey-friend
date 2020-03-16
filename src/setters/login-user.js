@@ -1,14 +1,13 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import { UserInputError } from 'apollo-server';
 import UserModel from '../schemas/user-model';
 
 const loginUser = async ( input ) => {  
   const { username, password } = input.loginInput;
-  const user = await UserModel.findOne({ username: username });
-  if (!user) return {
-    message:'Incorrect login information, please try again or register.',
-    username
-  };
+
+  const user = await UserModel.findOne({ username });
+  if (!user) throw new UserInputError('Incorrect login-- register or try again.');
 
   const match = await bcrypt.compare(password, user.password);
   if (match) {
@@ -24,7 +23,6 @@ const loginUser = async ( input ) => {
         token
       };
   }
-
 
   return {
     message:'Incorrect login information, please try again or register.',
