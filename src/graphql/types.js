@@ -12,8 +12,8 @@ export default gql`
     text: String
     beer: String
   }
-
-  input TargetGoalValues {
+  
+  type TargetGoalValues {
     phone: String
     text: String
     beer: String
@@ -73,7 +73,10 @@ export default gql`
   }
 
   input UpdateFriendTargetGoalsInput {
-    targetGoalValues: TargetGoalValues
+    phone: String
+    text: String
+    beer: String
+    cadence: String
     username: String!
     id: String!
   }
@@ -83,7 +86,7 @@ export default gql`
     user(username: String!): User
     users: [User]
     friend(username: String!, id: String!): Friend
-    friends: [Friend]
+    friends(username: String!): [Friend]
   }
 
   type Mutation {
