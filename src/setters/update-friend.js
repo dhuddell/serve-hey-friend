@@ -1,6 +1,6 @@
 import R from 'ramda';
 import { UserInputError } from 'apollo-server';
-import authorizeUser from '../helpers/authorize-user';
+import { authorizeUser, computeFriendScore } from '../helpers';
 import UserModel from '../schemas/user-model';
 
 const updateFriend = async (
@@ -11,7 +11,6 @@ const updateFriend = async (
     name,
     icon,
     description,
-    friendScore,
     username,
     id,
     goalSetCollection: {
@@ -29,6 +28,11 @@ const updateFriend = async (
   let friend = user.friends ? user.friends.id(id) : null;
   if (!friend) throw new UserInputError('Friend not found');
 
+  const currentGoalValues = R.propOr({}, 'currentGoals', friend);
+  const targetGoalValues = R.propOr({}, 'targetGoals', friend);
+
+  const friendScore = computeFriendScore(currentGoals, targetGoals);
+
   try {
     friend = {
       name,
@@ -38,9 +42,9 @@ const updateFriend = async (
       username,
       id,
       goalSetCollection: {
+        currentGoals: currentGoalValues,
+        targetGoals: targetGoalValues,
         cadence,
-        currentGoals: R.propOr({}, 'currentGoals', friend),
-        targetGoals: R.propOr({}, 'targetGoals', friend),
       }
     }
 
@@ -51,8 +55,6 @@ const updateFriend = async (
   } catch (e) {
     throw new UserInputError(e.message);
   }
-
-  // const updatedFriend = user.friends.id(id)
 
   return friend;
 };

@@ -1,6 +1,6 @@
 import R from 'ramda';
 import { UserInputError } from 'apollo-server';
-import authorizeUser from '../helpers/authorize-user';
+import { authorizeUser, computeFriendScore } from '../helpers';
 import createFriend from './create-friend';
 import UserModel from '../schemas/user-model';
 
@@ -9,7 +9,6 @@ const addFriendToUser = async ( requestInput, headers ) => {
     username,
     name,
     icon,
-    friendScore,
     description,
     goalSetCollection
     } = {}
@@ -25,9 +24,10 @@ const addFriendToUser = async ( requestInput, headers ) => {
   const nameIsTaken = user.friends.find((friend) => friend.name === name);
   if (nameIsTaken) throw new UserInputError('Friend name taken, please choose another name');
   
-  const currentGoals = R.pathOr({}, ['currentGoals'], goalSetCollection)
-  const targetGoals = R.pathOr({}, ['targetGoals'], goalSetCollection)
-  const cadence = R.pathOr({}, ['cadence'], goalSetCollection)
+  const currentGoals = R.pathOr({}, ['currentGoals'], goalSetCollection);
+  const targetGoals = R.pathOr({}, ['targetGoals'], goalSetCollection);
+  const cadence = R.pathOr({}, ['cadence'], goalSetCollection);
+  const friendScore = computeFriendScore(currentGoals, targetGoals);
 
   const friendInput = {
     username,
@@ -42,9 +42,9 @@ const addFriendToUser = async ( requestInput, headers ) => {
     },
   }
 
-  const friendObject = createFriend(friendInput);  
+  const friendObject = createFriend(friendInput);
   await user.friends.push(friendObject);
-  await user.save()
+  await user.save();
 
   return user.friends.id(friendObject._id);
 };
