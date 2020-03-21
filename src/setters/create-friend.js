@@ -1,3 +1,4 @@
+import R from 'ramda';
 import mongoose from 'mongoose';
 
 const createFriend = ( friend ) => ({
@@ -6,20 +7,19 @@ const createFriend = ( friend ) => ({
   name: friend.name,
   icon: friend.icon,
   friendScore: friend.friendScore,
-  nickname: friend.nickname,
   description: friend.description,
   goalSetCollection: {
     currentGoals: {
-      phone: friend.goalSetCollection.currentGoals.phone,
-      text: friend.goalSetCollection.currentGoals.text,
-      beer: friend.goalSetCollection.currentGoals.beer,
+      phone: R.pathOr('', ['goalSetCollection','currentGoals','phone'], friend),
+      text: R.pathOr('', ['goalSetCollection','currentGoals','text'], friend),
+      beer: R.pathOr('', ['goalSetCollection','currentGoals','beer'], friend),
     },
     targetGoals: {
-      phone: friend.goalSetCollection.targetGoals.phone,
-      text: friend.goalSetCollection.targetGoals.text,
-      beer: friend.goalSetCollection.targetGoals.beer,
+      phone: R.pathOr('', ['goalSetCollection','targetGoals','phone'], friend),
+      text: R.pathOr('', ['goalSetCollection','targetGoals','text'], friend),
+      beer: R.pathOr('', ['goalSetCollection','targetGoals','beer'], friend),
     },
-    cadence: friend.goalSetCollection.cadence
+    cadence: R.pathOr('', ['goalSetCollection','cadence'], friend),
   },
 });
 

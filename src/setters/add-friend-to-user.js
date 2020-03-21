@@ -34,7 +34,6 @@ const addFriendToUser = async ( requestInput, headers ) => {
     name,
     icon,
     friendScore,
-    nickname,
     description,
     goalSetCollection: {
       currentGoals,

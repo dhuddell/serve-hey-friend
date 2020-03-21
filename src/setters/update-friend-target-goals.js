@@ -6,7 +6,7 @@ import UserModel from '../schemas/user-model';
 const updateFriendTargetGoals = async (
   { updateFriendTargetGoalsInput },
   { token }
-) => {    
+) => {
   const {
     username,
     id,
@@ -20,10 +20,10 @@ const updateFriendTargetGoals = async (
 
   const user = await UserModel.findOne({ username: username });
   if (!user) throw new UserInputError('User not found');
-  
+
   const friend = user.friends ? user.friends.id(id) : null;
   if (!friend) throw new UserInputError('Friend not found');
-  
+
   try {
     friend.goalSetCollection = {
       currentGoals: R.pathOr({}, ['goalSetCollection', 'current'], friend),
@@ -38,7 +38,7 @@ const updateFriendTargetGoals = async (
   } catch (e) {
     throw new UserInputError(e.message);
   }
-  
+
   const updatedFriend = user.friends.id(id)
 
   return {

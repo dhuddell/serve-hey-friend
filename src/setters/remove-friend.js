@@ -1,10 +1,25 @@
+import { UserInputError } from 'apollo-server';
+
+import authorizeUser from '../helpers/authorize-user';
 import UserModel from '../schemas/user-model';
 
-const removeFriend = ({ username, friendId }) => {
+const removeFriend = async ({ username, friendId }, { token }) => {
+  authorizeUser(username, token)
+  
+  // this is wicked gross. honestly, fuck.
   return UserModel.findOne({ username }).then((user) => {
-    const deletedFriend = user.friends.find((friend) => friend.friendId === friendId);
-    user.friends.splice(user.friends.indexOf(deletedFriend), 1);
-    return user.save().then(() => `literally Thanos'ed friend named ${deletedFriend.name}.`);
+    const targetFriend = user.friends.id(friendId);
+
+    if (targetFriend) {
+      const friendRecord = user.friends.id(friendId).remove()
+
+      return user.save().then(() => {
+        console.log('have a friend', friendRecord)
+        return { message: `Removed friend: ${friendRecord.name}`}
+      })
+    }
+
+    throw new UserInputError('Friend not found');
   });
 };
 

@@ -40,6 +40,16 @@ export default gql`
     goalSetCollection: GoalSetCollectionInput
   }
 
+  input FriendUpdateInput {
+    username: String!
+    id: String!
+    name: String
+    icon: String
+    description: String
+    friendScore: Int
+    goalSetCollection: GoalSetCollectionInput
+  }
+
   type Friend {
     username: String
     id: String
@@ -72,6 +82,10 @@ export default gql`
     token: String
   }
 
+  type ConfirmationResponse {
+    message: String
+  }
+
   input UpdateFriendTargetGoalsInput {
     phone: String
     text: String
@@ -81,24 +95,26 @@ export default gql`
     id: String!
   }
 
-
   type Query {
     user(username: String!): User
     users: [User]
+
     friend(username: String!, id: String!): Friend
     friends(username: String!): [Friend]
   }
 
   type Mutation {
-    updateFriendTargetGoals(updateFriendTargetGoalsInput: UpdateFriendTargetGoalsInput!): TargetGoalValues
+    registerUser(registrationInput: RegistrationInput!): AuthResponse
+    loginUser(loginInput: LoginInput!): AuthResponse
 
     addFriendToUser(friendInput: FriendInput!): Friend
-    removeFriend(id: String): String
-    removeFriends(ignoreString: String): String
+    updateFriend(friendUpdateInput: FriendUpdateInput!): Friend
+    updateFriendTargetGoals(updateFriendTargetGoalsInput: UpdateFriendTargetGoalsInput!): TargetGoalValues
 
-    removeUser(username: String): String
-    registerUser(registrationInput: RegistrationInput!): AuthResponse
-    removeUsers(ignoreString: String): String
-    loginUser(loginInput: LoginInput!): AuthResponse
+    removeFriend(username: String, friendId: String!): ConfirmationResponse
+    removeFriends(username: String!): ConfirmationResponse
+
+    removeUser(username: String): ConfirmationResponse
+    removeUsers(ignoreString: String): ConfirmationResponse
   }
 `;
