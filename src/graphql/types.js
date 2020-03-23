@@ -28,6 +28,7 @@ export default gql`
 
   input GoalSetCollectionInput {
     targetGoals: GoalSetInput
+    currentGoals: GoalSetInput
     cadence: String
   }
 
@@ -35,7 +36,6 @@ export default gql`
     username: String!
     name: String!
     icon: String
-    friendScore: Int
     description: String
     goalSetCollection: GoalSetCollectionInput
   }
@@ -46,7 +46,6 @@ export default gql`
     name: String
     icon: String
     description: String
-    friendScore: Int
     goalSetCollection: GoalSetCollectionInput
   }
 
