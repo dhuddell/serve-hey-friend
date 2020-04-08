@@ -1,8 +1,11 @@
 import R from 'ramda';
 import mongoose from 'mongoose';
 
+const initialId = new mongoose.Types.ObjectId();
+
 const createFriend = ( friend ) => ({
-  _id: new mongoose.Types.ObjectId(),
+  _id: initialId,
+  friendId: initialId,
   username: friend.username,
   name: friend.name,
   icon: friend.icon,

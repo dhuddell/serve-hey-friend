@@ -9,7 +9,7 @@ const updateFriendTargetGoals = async (
 ) => {
   const {
     username,
-    id,
+    friendId,
     phone,
     text,
     beer,
@@ -21,7 +21,7 @@ const updateFriendTargetGoals = async (
   const user = await UserModel.findOne({ username: username });
   if (!user) throw new UserInputError('User not found');
 
-  const friend = user.friends ? user.friends.id(id) : null;
+  const friend = user.friends ? user.friends.id(friendId) : null;
   if (!friend) throw new UserInputError('Friend not found');
 
   try {
@@ -31,7 +31,7 @@ const updateFriendTargetGoals = async (
       cadence,
     }
 
-    var index = user.friends.findIndex(friend => friend._id == id);
+    var index = user.friends.findIndex(friend => friend._id == friendId);
     user.friends[index] = friend;
 
     await user.save()
@@ -39,7 +39,7 @@ const updateFriendTargetGoals = async (
     throw new UserInputError(e.message);
   }
 
-  const updatedFriend = user.friends.id(id)
+  const updatedFriend = user.friends.id(friendId)
 
   return {
     phone: R.pathOr('', ['goalSetCollection', 'targetGoals', 'phone'], updatedFriend),

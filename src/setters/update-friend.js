@@ -12,12 +12,8 @@ const updateFriend = async (
     icon,
     description,
     username,
-    id,
-    goalSetCollection: {
-      currentGoals,
-      targetGoals,
-      cadence,
-    } = {},
+    friendId,
+    goalSetCollection, // used by ramda
   } = friendUpdateInput;
   
   authorizeUser(username, token)
@@ -25,30 +21,39 @@ const updateFriend = async (
   const user = await UserModel.findOne({ username: username });
   if (!user) throw new UserInputError('User not found');
 
-  let friend = user.friends ? user.friends.id(id) : null;
+  let friend = user.friends
+    ? user.friends.find((friend) => friend.name === name)
+    : null;
+
   if (!friend) throw new UserInputError('Friend not found');
 
-  const currentGoalValues = R.propOr({}, 'currentGoals', friend);
-  const targetGoalValues = R.propOr({}, 'targetGoals', friend);
+  const anything = extractGoals(friend.goalSetCollection)
+  console.log(anything)
+  // const currentGoalValues = R.pathOr({}, ['goalSetCollection', 'currentGoals'], friend);
+  // const currentGoals = currentGoalValues.map(obj => 
+  //   ({ text: obj.text, beer: obj.beer, phone:obj.phone })
+  // )
+  // const targetGoalValues = R.pathOr({}, ['goalSetCollection', 'targetGoals'], friend);
 
-  const friendScore = computeFriendScore(currentGoals, targetGoals);
+  const cadence = R.pathOr('monthly', ['goalSetCollection', 'cadence'], friend);
+  // const friendScore = computeFriendScore(currentGoals, targetGoals);
 
   try {
     friend = {
       name,
       icon,
       description,
-      friendScore,
+      // friendScore,
       username,
-      id,
+      friendId,
       goalSetCollection: {
-        currentGoals: currentGoalValues,
-        targetGoals: targetGoalValues,
+        // currentGoals,
+        // targetGoals,
         cadence,
       }
     }
 
-    var index = user.friends.findIndex(friend => friend._id == id);
+    var index = user.friends.findIndex(friend => friend._id == friendId);
     user.friends[index] = friend;
 
     await user.save()
@@ -56,7 +61,17 @@ const updateFriend = async (
     throw new UserInputError(e.message);
   }
 
+  // TODO 3/24/2020 currently this is changing the _id which is a problem
+
   return friend;
 };
+
+const extractGoals = (goalInput) => {
+  return [goalInput.currentGoals, goalInput.targetGoals]
+    .map(obj => {
+      // convert this to an object with the name being the key.
+      ({ [obj]:text: obj.text, beer: obj.beer, phone:obj.phone })
+  )
+}
 
 export default updateFriend;

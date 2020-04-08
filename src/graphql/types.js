@@ -2,21 +2,21 @@ import gql from 'graphql-tag';
 
 export default gql`
   type GoalSet {
-    phone: String
-    text: String
-    beer: String
+    phone: Int
+    text: Int
+    beer: Int
   }
 
   input GoalSetInput {
-    phone: String
-    text: String
-    beer: String
+    phone: Int
+    text: Int
+    beer: Int
   }
   
-  type TargetGoalValues {
-    phone: String
-    text: String
-    beer: String
+  type GoalSetResponse {
+    phone: Int
+    text: Int
+    beer: Int
     cadence: String
   }
 
@@ -42,7 +42,7 @@ export default gql`
 
   input FriendUpdateInput {
     username: String!
-    id: String!
+    friendId: String!
     name: String
     icon: String
     description: String
@@ -51,7 +51,7 @@ export default gql`
 
   type Friend {
     username: String
-    id: String
+    friendId: String
     name: String
     icon: String
     description: String
@@ -85,20 +85,27 @@ export default gql`
     message: String
   }
 
+  input UpdateCurrentGoalInput {
+    goalKey: String!
+    goalValue: Int!
+    username: String!
+    friendId: String!
+  }
+
   input UpdateFriendTargetGoalsInput {
-    phone: String
-    text: String
-    beer: String
+    phone: Int
+    text: Int
+    beer: Int
     cadence: String
     username: String!
-    id: String!
+    friendId: String!
   }
 
   type Query {
     user(username: String!): User
     users: [User]
 
-    friend(username: String!, id: String!): Friend
+    friend(username: String!, friendId: String!): Friend
     friends(username: String!): [Friend]
   }
 
@@ -107,8 +114,9 @@ export default gql`
     loginUser(loginInput: LoginInput!): AuthResponse
 
     addFriendToUser(friendInput: FriendInput!): Friend
+    updateCurrentGoal(updateCurrentGoalInput: UpdateCurrentGoalInput!): GoalSetResponse
     updateFriend(friendUpdateInput: FriendUpdateInput!): Friend
-    updateFriendTargetGoals(updateFriendTargetGoalsInput: UpdateFriendTargetGoalsInput!): TargetGoalValues
+    updateFriendTargetGoals(updateFriendTargetGoalsInput: UpdateFriendTargetGoalsInput!): GoalSetResponse
 
     removeFriend(username: String, friendId: String!): ConfirmationResponse
     removeFriends(username: String!): ConfirmationResponse

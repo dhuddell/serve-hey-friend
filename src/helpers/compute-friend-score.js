@@ -1,13 +1,13 @@
-export default ({ currentGoals, targetGoals }) => {
-  const currentTotal = currentGoals.reduce((acc = 0, curr) => {
-    const safeCurrent = currentGoals[curr] || 0;
-    return acc += safeCurrent;
-  });
+const computeFriendScore = (currentGoals = {}, targetGoals = {}) => {
+  const currentTotal = sumGoalValues(currentGoals);
+  const targetTotal = sumGoalValues(targetGoals);
 
-  const targetTotal = targetGoals.reduce((acc = 0, curr) => {
-    const safeCurrent = targetGoals[curr] || 0;
-    return acc += safeCurrent;
-  })
+  console.log('currentGoals')
+  console.log(currentGoals)
+  console.log(currentTotal)
+  console.log('targetGoals')
+  console.log(targetGoals)
+  console.log(targetTotal)
 
     // cases: 
     // current > target
@@ -16,9 +16,15 @@ export default ({ currentGoals, targetGoals }) => {
       // (cannot divide, must return 100)
 
     // current are undefined, null, or 0 
-      // (must default to 0 and then return to 100)
+      // (must return 100)
 
+  const percentOfTarget = currentTotal / targetTotal;
 
-  console.log(Math.ceil(currentTotal/targetTotal));
-  return Math.ceil(currentTotal/targetTotal);
+  return percentOfTarget < 1 ? Math.ceil(currentTotal/targetTotal) : 100;
 };
+
+const sumGoalValues = (valueSet) => {
+  return Object.keys(valueSet).reduce((acc, curr) => ( acc += curr ), 100);
+}
+
+export default computeFriendScore;

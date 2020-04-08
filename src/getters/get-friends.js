@@ -12,9 +12,9 @@ const getFriends = async ( { username }, { token } ) => {
     .from(user.friends)
     .map((friend) => {
       friend.id = friend._id;
+      console.log(friend) // ??
       return friend
     });
-
   return friends;
 };
 
