@@ -1,12 +1,15 @@
-import { Schema } from 'mongoose';
-import GoalSetCollectionSchema from './goalSetCollection';
+import mongoose, { Schema } from 'mongoose';
+import GoalSetCollectionSchema from './goal-set-collection';
+
+const initialId = Schema.Types.ObjectId;
 
 const friendSchema = new Schema({
-  friendId: String,
+  _id: initialId,
+  friendId: initialId,
+  username: String,
   name: String,
   description: String,
   icon: String,
-  nickname: String,
   friendScore: Number,
   goalSetCollection: GoalSetCollectionSchema,
 }, { timestamps: true });

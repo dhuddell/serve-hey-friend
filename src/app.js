@@ -8,10 +8,12 @@ server.applyMiddleware({ // graphql
   app
 });
 
+app.use(cors({
+  origin: 'localhost:3000',
+  credentials: true,
+}));
 
-app.use(cors());
-
-const PORT = 4000 || process.env;
+const PORT = 3001 || process.env;
 app.listen(PORT, () => {
   console.log(`The server has started on port: ${PORT}`);
   console.log(`http://localhost:${PORT}/graphql`);
@@ -19,10 +21,10 @@ app.listen(PORT, () => {
 
 
 mongoose.connect('mongodb://localhost:27017/serve-i-miss-you', {useNewUrlParser: true});
-var db = mongoose.connection;
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  // we're connected!
+  // we're connected to the Data-bizzle
 });
 
 export default app;

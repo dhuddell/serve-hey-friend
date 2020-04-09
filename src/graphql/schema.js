@@ -1,23 +1,23 @@
 import { ApolloServer } from 'apollo-server-express';
-import { addMockFunctionsToSchema, makeExecutableSchema } from 'graphql-tools';
-import mocks from './mocks';
-
+import { makeExecutableSchema } from 'graphql-tools';
 import resolvers from './resolvers';
 import typeDefs from './types';
 
+const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT || `/graphql`;
+
+const schema = makeExecutableSchema({ typeDefs, resolvers });
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema,
   playground: {
-    endpoint: `http://localhost:4000/graphql`,
+    endpoint: GRAPHQL_ENDPOINT,
     settings: {
       'editor.theme': 'light'
     }
-  }
+  },
+  context: ({ req }) => {
+    const token = req.headers.token;
+    return { token };
+  },
 });
-
-const mockSchema = makeExecutableSchema({ typeDefs });
-
-addMockFunctionsToSchema({ schema: mockSchema, mocks });
 
 export default server;

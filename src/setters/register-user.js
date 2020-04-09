@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import UserModel from '../schemas/user-model';
@@ -8,23 +9,38 @@ const hashPassword = ( pw ) => {
 };
 
 const registerUser = async ( input ) => {
-  const user = input.userInput;
+  const { username, password } = input.registrationInput;
 
   let usernameTaken;
   await UserModel.find({}, (err, users) => {
-    usernameTaken = users.some((userBoi) => userBoi.username === user.username)
+    usernameTaken = users.some((userBoi) => userBoi.username === username)
   });
 
-  if (usernameTaken) throw new Error('Username taken!');
-  const hashedPassword = await hashPassword(user.password);
+  if (usernameTaken) return {
+    message:'That username is already taken, please choose again.',
+    username,
+  };
 
-  return UserModel.create({
+  const hashedPassword = await hashPassword(password);
+  const token = jwt.sign(
+    { username },
+    'tempi is a dog',
+    { expiresIn: '2h' }
+  );
+
+  const userResult = await UserModel.create({
     _id: new mongoose.Types.ObjectId(),
-    username: user.username,
+    username: username,
     password: hashedPassword,
-    name: user.name,
-    setting: user.setting,
-  }).then((user) => user);
+    message: 'Placeholder message'
+  });
+
+  userResult.save();
+  return {
+    message: 'User created successfully!',
+    token,
+    username,
+  }
 };
 
 export default registerUser;

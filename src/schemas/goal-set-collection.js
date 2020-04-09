@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import GoalSetSchema from './goalSet';
+import GoalSetSchema from './goal-set';
 
 const GoalSetCollectionSchema = new Schema({
   cadence: String,

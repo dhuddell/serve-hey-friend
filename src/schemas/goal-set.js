@@ -1,9 +1,9 @@
 import { Schema } from 'mongoose';
 
 const GoalSetSchema = new Schema({
-  phone: String,
-  text: String,
-  beer: String,
+  phone: Number,
+  text: Number,
+  beer: Number,
 });
 
 export default GoalSetSchema;

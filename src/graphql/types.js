@@ -1,16 +1,23 @@
 import gql from 'graphql-tag';
 
-const typeDefs = gql`
+export default gql`
   type GoalSet {
-    phone: String
-    text: String
-    beer: String
+    phone: Int
+    text: Int
+    beer: Int
   }
 
   input GoalSetInput {
-    phone: String
-    text: String
-    beer: String
+    phone: Int
+    text: Int
+    beer: Int
+  }
+  
+  type GoalSetResponse {
+    phone: Int
+    text: Int
+    beer: Int
+    cadence: String
   }
 
   type GoalSetCollection {
@@ -20,64 +27,101 @@ const typeDefs = gql`
   }
 
   input GoalSetCollectionInput {
-    currentGoals: GoalSetInput
     targetGoals: GoalSetInput
+    currentGoals: GoalSetInput
     cadence: String
   }
 
   input FriendInput {
+    username: String!
     name: String!
     icon: String
-    nickname: String
-    friendScore: Float
     description: String
     goalSetCollection: GoalSetCollectionInput
-    username: String
+  }
+
+  input FriendUpdateInput {
+    username: String!
+    friendId: String!
+    name: String
+    icon: String
+    description: String
+    goalSetCollection: GoalSetCollectionInput
   }
 
   type Friend {
+    username: String
     friendId: String
     name: String
     icon: String
-    nickname: String
-    friendScore: Float
     description: String
+    friendScore: Int
     goalSetCollection: GoalSetCollection
   }
 
-  input UserInput {
+  input LoginInput {
     username: String!
     password: String!
-    name: String
-    setting: String
+  }
+
+  input RegistrationInput {
+    username: String!
+    password: String!
   }
 
   type User {
     username: String!
-    password: String!
     name: String
     friends: [Friend]
-    setting: String
+  }
+
+  type AuthResponse {
+    message: String
+    username: String
+    token: String
+  }
+
+  type ConfirmationResponse {
+    message: String
+  }
+
+  input UpdateCurrentGoalInput {
+    goalKey: String!
+    goalValue: Int!
+    username: String!
+    friendId: String!
+  }
+
+  input UpdateFriendTargetGoalsInput {
+    phone: Int
+    text: Int
+    beer: Int
+    cadence: String
+    username: String!
+    friendId: String!
   }
 
   type Query {
     user(username: String!): User
     users: [User]
+
     friend(username: String!, friendId: String!): Friend
     friends(username: String!): [Friend]
   }
 
   type Mutation {
-    updateTargetFriendGoals(username: String!, goalSetCollection: GoalSetCollectionInput): Friend
+    registerUser(registrationInput: RegistrationInput!): AuthResponse
+    loginUser(loginInput: LoginInput!): AuthResponse
 
     addFriendToUser(friendInput: FriendInput!): Friend
-    removeFriend(username: String!, friendId: String!): String
-    removeAllFriends(username: String!): String
+    updateCurrentGoal(updateCurrentGoalInput: UpdateCurrentGoalInput!): GoalSetResponse
+    updateFriend(friendUpdateInput: FriendUpdateInput!): Friend
+    updateFriendTargetGoals(updateFriendTargetGoalsInput: UpdateFriendTargetGoalsInput!): GoalSetResponse
 
-    registerUser(userInput: UserInput!): User
-    removeUser(username: String): String
-    removeAllUsers: String
+    removeFriend(username: String, friendId: String!): ConfirmationResponse
+    removeFriends(username: String!): ConfirmationResponse
+
+    removeUser(username: String): ConfirmationResponse
+    removeUsers(ignoreString: String): ConfirmationResponse
   }
 `;
-
-export default typeDefs;
