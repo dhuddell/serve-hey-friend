@@ -1,19 +1,21 @@
 import express from 'express';
+import cors from 'cors';
 import Knex from 'knex';
 import { Model } from 'objection';
 
+import knexConfig from './knexfile.js'
 import server from './graphql/schema';
-import cors from 'cors';
-
-// remove this
-import mongoose from 'mongoose';
-// remove this
 
 const app = express();
-server.applyMiddleware({ // graphql
-  app
-});
 
+ // graphql
+server.applyMiddleware({ app });
+
+// SQL
+const knex = Knex(knexConfig);
+Model.knex(knex);
+
+// CORS
 app.use(cors({
   origin: 'localhost:3000',
   credentials: true,
@@ -25,22 +27,12 @@ app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}/graphql`);
 });
 
-
-var knex = Knex({
-  client: 'postgresql',
-  connection: 'serve-i-miss-you',
-});
-
-Model.knex(knex)
-
-// remove this
+// REMOVE AFTER MONGO IS DED
+import mongoose from 'mongoose';
 mongoose.connect('mongodb://localhost:27017/serve-i-miss-you', {useNewUrlParser: true});
 const db = mongoose.connection;
-// remove this
-
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  // we're connected to the Data-bizzle
-});
+db.once('open', function() {});
+// REMOVE AFTER MONGO IS DED
 
 export default app;

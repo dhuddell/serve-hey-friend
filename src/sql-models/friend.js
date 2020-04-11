@@ -1,23 +1,23 @@
 import { Model } from 'objection';
 import Relationship from './relationship';
 
-class User extends Model {
+class Friend extends Model {
   static get tableName() {
-    return 'users';
+    return 'friends';
   }
 
   static get relationMappings() {
     return {
       relationships: {
-        relation: Model.HasManyRelation,
+        relation: Model.HasOneRelation,
         modelClass: Relationship,
         join: {
-          from: 'users.id',
-          to: 'relationships.user_id'
+          from: 'friends.id',
+          to: 'relationships.friend_id'
         }
       }
     }
   }
 }
 
-export default User;
+export default Friend;

@@ -62,16 +62,20 @@ const updateFriend = async (
   }
 
   // TODO 3/24/2020 currently this is changing the _id which is a problem
-
+  // ^^^ This shouldn't matter once SQL is completed
   return friend;
 };
 
+
+
+// THIS IS BROKEN RIGHT NOW, DISREGARD
 const extractGoals = (goalInput) => {
   return [goalInput.currentGoals, goalInput.targetGoals]
     .map(obj => {
+      return obj
       // convert this to an object with the name being the key.
-      ({ [obj]:text: obj.text, beer: obj.beer, phone:obj.phone })
-  )
+      // ({ [obj]:text: obj.text, beer: obj.beer, phone:obj.phone })
+    })
 }
 
 export default updateFriend;
