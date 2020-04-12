@@ -67,6 +67,7 @@ export default gql`
   input RegistrationInput {
     username: String!
     password: String!
+    name: String
   }
 
   type User {
@@ -78,6 +79,7 @@ export default gql`
   type AuthResponse {
     message: String
     username: String
+    name: String
     token: String
   }
 
