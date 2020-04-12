@@ -102,7 +102,7 @@ export default gql`
   }
 
   type Query {
-    user(username: String!): User
+    user(username: String!, id: String!): User
     users: [User]
 
     friend(username: String!, friendId: String!): Friend
