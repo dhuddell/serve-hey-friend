@@ -67,11 +67,13 @@ export default gql`
   input RegistrationInput {
     username: String!
     password: String!
+    email: String
     name: String
   }
 
   type User {
     username: String!
+    id: String!
     name: String
     friends: [Friend]
   }

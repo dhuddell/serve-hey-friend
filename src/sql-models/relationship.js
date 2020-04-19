@@ -1,5 +1,6 @@
 import { Model } from 'objection';
-import User from './user';
+import Person from './person';
+import Goal from './goal';
 
 class Relationship extends Model {
   static get tableName() {
@@ -8,28 +9,28 @@ class Relationship extends Model {
 
   static get relationMappings() {
     return {
-      users: {
+      followers: {
         relation: Model.BelongsToOneRelation,
-        modelClass: User,
+        modelClass: Person,
         join: {
-          from: 'relationships.user_id',
-          to: 'users.id'
-        }
+          from: 'relationships.follower_id',
+          to: 'persons.id',
+        },
       },
-      friends: {
+      followees: {
         relation: Model.BelongsToOneRelation,
-        modelClass: Friend,
+        modelClass: Person,
         join: {
-          from: 'relationships.friend_id',
-          to: 'friends.id'
-        }
+          from: 'relationships.followee_id',
+          to: 'persons.id',
+        },
       },
-      goalSets: {
+      goals: {
         relation: Model.BelongsToOneRelation,
-        modelClass: GoalSet,
+        modelClass: Goal,
         join: {
-          from: 'relationships.goal_set_id',
-          to: 'goal_sets.id'
+          from: 'relationships.goal_id',
+          to: 'goals.id'
         }
       }
     }
