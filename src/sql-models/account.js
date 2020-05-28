@@ -6,6 +6,10 @@ class Account extends Model {
     return 'accounts';
   }
 
+  static get idColumn() {
+    return 'id'
+  }
+
   static get relationMappings() {
     return {
       persons: {

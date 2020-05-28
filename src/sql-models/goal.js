@@ -6,6 +6,10 @@ class Goal extends Model {
     return 'goals';
   }
 
+  static get idColumn() {
+    return 'id'
+  }
+
   static get relationMappings() {
     return {
       relationships: {

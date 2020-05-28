@@ -3,6 +3,13 @@ import { UserInputError } from 'apollo-server';
 import authorizeUser from '../helpers/authorize-user';
 import UserModel from '../schemas/user-model';
 
+// 5/27/2020
+// Need to create a trigger to properly order and cascade deletions
+// If follower is deleted,
+//   remove all relationships then goals
+//   then followee unless we (someday)
+//   have many to many follower : followee
+
 const removeFriend = async ({ username, friendId }, { token }) => {
   authorizeUser(username, token)
   

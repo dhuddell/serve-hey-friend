@@ -6,8 +6,11 @@ import { Account, Person } from '../sql-models';
 const loginUser = async ( input ) => {
   const { username, password } = input.loginInput;
 
-  const user = await Account.query().findOne({ username });
-  const person = await Person.query().findById(user.person_id);
+  const user = await Account.query()
+    .select('*')
+    .joinRelated('persons', { alias: 'p' })
+    .where('username', username)
+    .first()
 
   if (!user) throw new UserInputError('Incorrect login-- register or try again.');
 
@@ -21,7 +24,7 @@ const loginUser = async ( input ) => {
 
     return {
       message:'Login successful!',
-      name: person.name,
+      name: user.name,
       username,
       token
     };

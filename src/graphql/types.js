@@ -1,52 +1,42 @@
 import gql from 'graphql-tag';
 
-export default gql`
-  type GoalSet {
-    phone: Int
-    text: Int
-    beer: Int
-  }
-
-  input GoalSetInput {
-    phone: Int
-    text: Int
-    beer: Int
-  }
-  
-  type GoalSetResponse {
-    phone: Int
-    text: Int
-    beer: Int
+// i just broke all goals stuff.
+export default gql`  
+  type Goals {
+    currentText: Int
+    currentPhone: Int
+    currentBeer: Int
+    targetText: Int
+    targetPhone: Int
+    targetBeer: Int
     cadence: String
   }
 
-  type GoalSetCollection {
-    currentGoals: GoalSet
-    targetGoals: GoalSet
+  input GoalsInput {
+    currentText: Int
+    currentPhone: Int
+    currentBeer: Int
+    targetText: Int
+    targetPhone: Int
+    targetBeer: Int
     cadence: String
   }
 
-  input GoalSetCollectionInput {
-    targetGoals: GoalSetInput
-    currentGoals: GoalSetInput
-    cadence: String
-  }
-
-  input FriendInput {
+  input CreateFriendInput {
     username: String!
     name: String!
     icon: String
     description: String
-    goalSetCollection: GoalSetCollectionInput
+    goals: GoalsInput
   }
 
-  input FriendUpdateInput {
+  input UpdateFriendInput {
     username: String!
     friendId: String!
     name: String
     icon: String
     description: String
-    goalSetCollection: GoalSetCollectionInput
+    goals: GoalsInput
   }
 
   type Friend {
@@ -56,7 +46,7 @@ export default gql`
     icon: String
     description: String
     friendScore: Int
-    goalSetCollection: GoalSetCollection
+    goals: Goals
   }
 
   input LoginInput {
@@ -117,10 +107,12 @@ export default gql`
     registerUser(registrationInput: RegistrationInput!): AuthResponse
     loginUser(loginInput: LoginInput!): AuthResponse
 
-    addFriendToUser(friendInput: FriendInput!): Friend
-    updateCurrentGoal(updateCurrentGoalInput: UpdateCurrentGoalInput!): GoalSetResponse
-    updateFriend(friendUpdateInput: FriendUpdateInput!): Friend
-    updateFriendTargetGoals(updateFriendTargetGoalsInput: UpdateFriendTargetGoalsInput!): GoalSetResponse
+    addFriendToUser(createFriendInput: CreateFriendInput!): Friend
+    
+    # is this what I want to return?
+    updateCurrentGoal(updateCurrentGoalInput: UpdateCurrentGoalInput!): Goals
+    updateFriend(updateFriendInput: UpdateFriendInput!): Friend
+    updateFriendTargetGoals(updateFriendTargetGoalsInput: UpdateFriendTargetGoalsInput!): Goals
 
     removeFriend(username: String, friendId: String!): ConfirmationResponse
     removeFriends(username: String!): ConfirmationResponse
