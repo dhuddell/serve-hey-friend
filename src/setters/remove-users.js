@@ -1,6 +1,6 @@
-import UserModel from '../schemas/user-model';
+import { Account } from '../sql-models'
 
-const removeUsers = () => UserModel.deleteMany({})
-  .then(() => ({ message: 'literally Thanos\'ed all the users'}));
+const removeUsers = async () => await Account.query().delete()
+    .then(() => ({ message: 'Literally Thanos\'ed all the users'}));
 
 export default removeUsers;

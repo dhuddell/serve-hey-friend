@@ -1,3 +1,4 @@
+import { UserInputError } from 'apollo-server';
 import { 
   authorizeUser,
   insertFriendToDatabase,
@@ -5,7 +6,7 @@ import {
 } from '../helpers';
 import { Account } from '../sql-models';
 
-const addFriendToUser = async ( { createFriendInput }, headers ) => {
+const addFriendToUser = async ( { createFriendInput }, { token } ) => {
   const {
     username,
     name,
@@ -14,7 +15,7 @@ const addFriendToUser = async ( { createFriendInput }, headers ) => {
     goals,
   } = createFriendInput;
 
-  authorizeUser(username, headers.token);
+  authorizeUser(username, token);
 
   const follower = await Account.query()
     .select('accounts.*', 'p.name')
