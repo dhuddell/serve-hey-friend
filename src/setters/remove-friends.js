@@ -1,8 +1,8 @@
 import UserModel from '../schemas/user-model';
-import authorizeUser from '../helpers/authorize-user';
+import authenticateUser from '../helpers/authenticate-user';
 
 const removeFriends = ({ username }, { token }) => {
-  authorizeUser(username, token)
+  authenticateUser(username, token)
 
   return UserModel.findOne({ username }).then((user) => {
     if(user) {

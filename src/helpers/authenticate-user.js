@@ -8,4 +8,4 @@ export default ( username, token ) => {
     throw new AuthenticationError('Not logged in'); 
 };
 
-export const authorizeAny = (token) => jwt.verify(token, 'tempi is a dog');
+export const authenticateAny = (token) => jwt.verify(token, 'tempi is a dog');

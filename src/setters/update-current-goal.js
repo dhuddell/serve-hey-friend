@@ -1,5 +1,5 @@
 import { UserInputError } from 'apollo-server';
-import authorizeUser from '../helpers/authorize-user';
+import authenticateUser from '../helpers/authenticate-user';
 import UserModel from '../schemas/user-model';
 
 const updateCurrentGoal = async (
@@ -17,7 +17,7 @@ const updateCurrentGoal = async (
 
 // currently compute friend score is broken
 
-  authorizeUser(username, token)
+  authenticateUser(username, token)
 
   const user = await UserModel.findOne({ username: username });
   if (!user) throw new UserInputError('User not found');

@@ -1,9 +1,9 @@
 import { UserInputError } from 'apollo-server';
-import authorizeUser from '../helpers/authorize-user';
+import authenticateUser from '../helpers/authenticate-user';
 import { Account, Person, Relationship } from '../sql-models';
 
 export default async ( { username, id }, { token } ) => {
-  authorizeUser(username, token);
+  authenticateUser(username, token);
   const user = await Account.query().findById(id);
   if (!user) throw new UserInputError('User not found');
 

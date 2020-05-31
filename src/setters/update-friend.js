@@ -1,8 +1,9 @@
 import R from 'ramda';
 import { UserInputError } from 'apollo-server';
-import { authorizeUser, computeFriendScore } from '../helpers';
+import { authenticateUser, computeFriendScore } from '../helpers';
 import UserModel from '../schemas/user-model';
 
+// NEEDS REFACTOR 
 const updateFriend = async (
   { friendUpdateInput },
   { token }
@@ -13,10 +14,10 @@ const updateFriend = async (
     description,
     username,
     friendId,
-    goalSetCollection, // used by ramda
+    goalSetCollection, // used by ramda // SINCE BEEN REMOVED 5/27/20
   } = friendUpdateInput;
   
-  authorizeUser(username, token)
+  authenticateUser(username, token)
 
   const user = await UserModel.findOne({ username: username });
   if (!user) throw new UserInputError('User not found');

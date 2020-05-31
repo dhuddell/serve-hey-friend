@@ -1,33 +1,43 @@
 import { UserInputError } from 'apollo-server';
-
-import authorizeUser from '../helpers/authorize-user';
-import UserModel from '../schemas/user-model';
+import authenticateUser from '../helpers/authenticate-user';
+import { Account, Relationship, Person, Goal } from '../sql-models';
 
 // 5/27/2020
 // Need to create a trigger to properly order and cascade deletions
-// If follower is deleted,
-//   remove all relationships then goals
-//   then followee unless we (someday)
-//   have many to many follower : followee
 
 const removeFriend = async ({ username, friendId }, { token }) => {
-  authorizeUser(username, token)
-  
-  // this is wicked gross. honestly, fuck.
-  return UserModel.findOne({ username }).then((user) => {
-    const targetFriend = user.friends.id(friendId);
+  authenticateUser(username, token)
+  const account = await Account.query().where({ username }).first() || {};
+  const relationship = await Relationship.query()
+    .where({ follower_id: account.person_id })
+    .andWhere({ followee_id: friendId }).first();
 
-    if (targetFriend) {
-      const friendRecord = user.friends.id(friendId).remove()
+  if (!relationship) throw new UserInputError('Friendship not found');
 
-      return user.save().then(() => {
-        console.log('have a friend', friendRecord)
-        return { message: `Removed friend: ${friendRecord.name}`}
-      })
-    }
+  try {
+    const transactionResponse = Account.transaction(async (t) => {
+      try {
+        await Relationship.query().delete().where({ followee_id: relationship.followee_id })
+        await Goal.query().delete().where({ 'id': relationship.goal_id });
 
-    throw new UserInputError('Friend not found');
-  });
+        const person = await Person.query().delete()
+          .where({ 'id': relationship.followee_id }).returning('*').first();
+
+        return { message: `Removed friend '${person.name}' of user '${username}'.` };
+
+      } catch (err) {
+        console.log('Remove friend transation error: ', err);
+        throw new UserInputError(err);
+      }
+    });
+
+    return transactionResponse;
+
+  } catch (error) {
+    console.log('Remove friend transation error: ', err);
+
+    throw new UserInputError(err);
+  }
 };
 
 export default removeFriend;

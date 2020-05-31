@@ -1,5 +1,5 @@
 import { UserInputError } from 'apollo-server';
-import authorizeUser from '../helpers/authorize-user';
+import authenticateUser from '../helpers/authenticate-user';
 import { Account, Person, Relationship, Goal } from '../sql-models';
 
 // 5/27/2020
@@ -9,7 +9,7 @@ import { Account, Person, Relationship, Goal } from '../sql-models';
 // * STOPGAP * This is a until the SQL cascading can properly handle this
 
 const removeUser = async ({ username }, { token }) => {
-  authorizeUser(username, token);
+  authenticateUser(username, token);
 
   try {
     // I dont think transaction is working
@@ -28,7 +28,7 @@ const removeUser = async ({ username }, { token }) => {
           return accum;
         }, []);
 
-        await Account.query().delete().where({ username }).first()
+        await Account.query().delete().where({ username })
         await Person.query().delete().whereIn('id', personIds);
         await Goal.query().delete().whereIn('id', relationshipRecords.map((r) => r.goal_id));
 
