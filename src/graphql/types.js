@@ -113,19 +113,18 @@ export default gql`
   type Mutation {
     loginUser(loginInput: LoginInput!): AuthResponse
     registerUser(registrationInput: RegistrationInput!): AuthResponse
-    updateUser(updateUserInput: UpdateUserInput!): User
-    removeUser(username: String): ConfirmationResponse
-    removeUsers(ignoreString: String): ConfirmationResponse
 
     addFriendToUser(createFriendInput: CreateFriendInput!): Friend
     
+    updateUser(updateUserInput: UpdateUserInput!): User
     # is this what I want to return?
     updateFriend(updateFriendInput: UpdateFriendInput!): Friend
-
     updateFriendTargetGoals(updateFriendTargetGoalsInput: UpdateFriendTargetGoalsInput!): Goals
+    updateCurrentGoal(updateCurrentGoalInput: UpdateCurrentGoalInput!): Goals
+
+    removeUser(username: String): ConfirmationResponse
+    removeUsers(ignoreString: String): ConfirmationResponse
     removeFriend(username: String, friendId: String!): ConfirmationResponse
     removeFriends(username: String!): ConfirmationResponse
-
-    updateCurrentGoal(updateCurrentGoalInput: UpdateCurrentGoalInput!): Goals
   }
 `;
