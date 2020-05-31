@@ -19,7 +19,7 @@ const loginUser = async ( input ) => {
     const token = jwt.sign(
       { username },
       'tempi is a dog',
-      { expiresIn: '2h' }
+      { expiresIn: '24h' }
     );
 
     return {

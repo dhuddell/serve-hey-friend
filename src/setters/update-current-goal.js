@@ -2,10 +2,7 @@ import { UserInputError } from 'apollo-server';
 import authenticateUser from '../helpers/authenticate-user';
 import UserModel from '../schemas/user-model';
 
-const updateCurrentGoal = async (
-  { updateCurrentGoalInput },
-  { token }
-) => {
+const updateCurrentGoal = async ({ updateCurrentGoalInput }, { token }) => {
   const {
     username,
     friendId,

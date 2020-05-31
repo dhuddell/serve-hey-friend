@@ -8,6 +8,7 @@ import {
 import {
   loginUser,
   registerUser,
+  updateUser,
   addFriendToUser,
   updateFriend,
   updateCurrentGoal,
@@ -33,6 +34,9 @@ const resolvers = {
   Mutation: {
     registerUser: (_, args, context) => registerUser(args, context),
     loginUser: (_, args, context) => loginUser(args, context),
+    updateUser: (_, args, context) => updateUser(args, context),
+    removeUser: (_, args, context) => removeUser(args, context),
+    removeUsers: (_, args, context) => removeUsers(args, context),
 
     addFriendToUser: (_, args, context) => addFriendToUser(args, context),
     updateCurrentGoal: (_, args, context) => updateCurrentGoal(args, context),
@@ -41,9 +45,6 @@ const resolvers = {
 
     removeFriend: (_, args, context) => removeFriend(args, context),
     removeFriends: (_, args, context) => removeFriends(args, context),
-    
-    removeUser: (_, args, context) => removeUser(args, context),
-    removeUsers: (_, args, context) => removeUsers(args, context),
   },
 };
 

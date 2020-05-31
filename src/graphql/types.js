@@ -61,11 +61,18 @@ export default gql`
     name: String
   }
 
-  type User {
+  input UpdateUserInput {
     username: String!
-    id: String!
+    password: String
+    email: String
     name: String
-    friends: [Friend]
+  }
+
+  type User {
+    username: String
+    password: String
+    email: String
+    name: String
   }
 
   type AuthResponse {
@@ -96,7 +103,7 @@ export default gql`
   }
 
   type Query {
-    user(username: String!, id: String!): User
+    user(username: String!): User
     users: [User]
 
     friend(username: String!, friendId: String!): Friend
@@ -104,20 +111,21 @@ export default gql`
   }
 
   type Mutation {
-    registerUser(registrationInput: RegistrationInput!): AuthResponse
     loginUser(loginInput: LoginInput!): AuthResponse
+    registerUser(registrationInput: RegistrationInput!): AuthResponse
+    updateUser(updateUserInput: UpdateUserInput!): User
+    removeUser(username: String): ConfirmationResponse
+    removeUsers(ignoreString: String): ConfirmationResponse
 
     addFriendToUser(createFriendInput: CreateFriendInput!): Friend
     
     # is this what I want to return?
-    updateCurrentGoal(updateCurrentGoalInput: UpdateCurrentGoalInput!): Goals
     updateFriend(updateFriendInput: UpdateFriendInput!): Friend
-    updateFriendTargetGoals(updateFriendTargetGoalsInput: UpdateFriendTargetGoalsInput!): Goals
 
+    updateFriendTargetGoals(updateFriendTargetGoalsInput: UpdateFriendTargetGoalsInput!): Goals
     removeFriend(username: String, friendId: String!): ConfirmationResponse
     removeFriends(username: String!): ConfirmationResponse
 
-    removeUser(username: String): ConfirmationResponse
-    removeUsers(ignoreString: String): ConfirmationResponse
+    updateCurrentGoal(updateCurrentGoalInput: UpdateCurrentGoalInput!): Goals
   }
 `;

@@ -13,7 +13,7 @@ const registerUser = async ( input ) => {
   const token = jwt.sign(
     { username },
     'tempi is a dog',
-    { expiresIn: '2h' }
+    { expiresIn: '24h' }
   );
   const personId = uuid.v4();
 
