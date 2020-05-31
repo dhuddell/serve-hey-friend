@@ -1,0 +1,1 @@
+export { default as mapGoals } from './map-goals';

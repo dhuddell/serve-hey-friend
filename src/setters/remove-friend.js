@@ -3,7 +3,7 @@ import authenticateUser from '../helpers/authenticate-user';
 import { Account, Relationship, Person, Goal } from '../sql-models';
 
 // 5/27/2020
-// Need to create a trigger to properly order and cascade deletions
+// TODO: Need to create a trigger to properly order and cascade deletions
 
 const removeFriend = async ({ username, friendId }, { token }) => {
   authenticateUser(username, token)
