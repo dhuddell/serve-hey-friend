@@ -1,82 +1,59 @@
-import R from 'ramda';
 import { UserInputError } from 'apollo-server';
-import { authenticateUser, computeFriendScore } from '../helpers';
-import UserModel from '../schemas/user-model';
+import { authenticateUser, computeFriendScore, checkNameAvailability } from '../helpers';
+import { goalMappers } from '../helpers';
+import { Account, Relationship, Person, Goal } from '../sql-models';
 
-// NEEDS REFACTOR 
-const updateFriend = async (
-  { friendUpdateInput },
-  { token }
-) => {
+const updateFriend = async ({ updateFriendInput }, { token }) => {
   const {
+    username,
     name,
     icon,
     description,
-    username,
     friendId,
-    goalSetCollection, // used by ramda // SINCE BEEN REMOVED 5/27/20
-  } = friendUpdateInput;
-  
+    goals
+  } = updateFriendInput;
+
   authenticateUser(username, token)
 
-  const user = await UserModel.findOne({ username: username });
-  if (!user) throw new UserInputError('User not found');
+  const initialAccount = await Account.query().where({ username }).first()
+  if (!initialAccount) throw new UserInputError('User not found');
 
-  let friend = user.friends
-    ? user.friends.find((friend) => friend.name === name)
-    : null;
+  const initialRelationship = await Relationship.query()
+    .where({ follower_id: initialAccount.person_id, followee_id: friendId }).first()
+    
+  if (!initialRelationship) throw new UserInputError('Friend not found');
+  await checkNameAvailability({ followerId: initialAccount.person_id, name });
 
-  if (!friend) throw new UserInputError('Friend not found');
+  const initialGoals = await Goal.query()
+    .where({ id: initialRelationship.goal_id }).returning('*').first();
+ 
+  const transactionResponse = await Account.transaction(async (trx) => {
+    const updatedGoals = Object.assign(goalMappers.mapGoalsToApi(initialGoals), goals)
+    const friendScore = computeFriendScore(updatedGoals)
 
-  const anything = extractGoals(friend.goalSetCollection)
-  console.log(anything)
-  // const currentGoalValues = R.pathOr({}, ['goalSetCollection', 'currentGoals'], friend);
-  // const currentGoals = currentGoalValues.map(obj => 
-  //   ({ text: obj.text, beer: obj.beer, phone:obj.phone })
-  // )
-  // const targetGoalValues = R.pathOr({}, ['goalSetCollection', 'targetGoals'], friend);
+    const relationship = await Relationship.query(trx).patch({ icon, description })
+      .where({ follower_id: initialAccount.person_id, followee_id: friendId }).returning('*').first();
 
-  const cadence = R.pathOr('monthly', ['goalSetCollection', 'cadence'], friend);
-  // const friendScore = computeFriendScore(currentGoals, targetGoals);
+    const person = await Person.query(trx).patch({ name })
+      .where({ id: initialAccount.person_id }).returning('*').first();
 
-  try {
-    friend = {
-      name,
-      icon,
-      description,
-      // friendScore,
-      username,
-      friendId,
-      goalSetCollection: {
-        // currentGoals,
-        // targetGoals,
-        cadence,
-      }
-    }
+    const goalsResponse = await Goal.query(trx).patch({ 
+      ...goalMappers.mapGoalsToDatabase(updatedGoals),
+      friend_score: friendScore
+     }).where({ id: initialRelationship.goal_id }).returning('*').first();
 
-    var index = user.friends.findIndex(friend => friend._id == friendId);
-    user.friends[index] = friend;
+    return {
+      username: initialAccount.username,
+      friendId: relationship.followee_id,
+      name: person.name,
+      icon: relationship.icon,
+      description: relationship.description,
+      friendScore: goalsResponse.friend_score,
+      goals: goalMappers.mapGoalsToApi(goalsResponse)
+    };
+  });
 
-    await user.save()
-  } catch (e) {
-    throw new UserInputError(e.message);
-  }
-
-  // TODO 3/24/2020 currently this is changing the _id which is a problem
-  // ^^^ This shouldn't matter once SQL is completed
-  return friend;
+  return transactionResponse;
 };
-
-
-
-// THIS IS BROKEN RIGHT NOW, DISREGARD
-const extractGoals = (goalInput) => {
-  return [goalInput.currentGoals, goalInput.targetGoals]
-    .map(obj => {
-      return obj
-      // convert this to an object with the name being the key.
-      // ({ [obj]:text: obj.text, beer: obj.beer, phone:obj.phone })
-    })
-}
 
 export default updateFriend;

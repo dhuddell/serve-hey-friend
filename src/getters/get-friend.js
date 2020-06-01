@@ -1,6 +1,6 @@
 import { UserInputError } from 'apollo-server';
 import authenticateUser from '../helpers/authenticate-user';
-import { mapGoals } from '../mappers';
+import { goalMappers } from '../helpers';
 import { Account, Relationship } from '../sql-models';
 
 const getFriend = async ( { username, friendId }, { token } ) => {    
@@ -23,7 +23,7 @@ const getFriend = async ( { username, friendId }, { token } ) => {
     friendId: relationship.followee_id,
     description: relationship.description,
     friendScore: relationship.friend_score,
-    goals: mapGoals(relationship),
+    goals: goalMappers.mapGoalsToDatabase(relationship),
   }
 
   return friend;

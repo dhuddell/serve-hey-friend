@@ -24,7 +24,7 @@ const addFriendToUser = async ( { createFriendInput }, { token } ) => {
     .first()
 
   if (!follower) throw new UserInputError('User not found');
-  await checkNameAvailability({ follower, name });
+  await checkNameAvailability({ followerId: follower.person_id, name });
 
   const { friendRecord, goalsRecord, relationshipRecord } = await insertFriendToDatabase({
     goals,

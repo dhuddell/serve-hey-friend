@@ -1,10 +1,10 @@
 import { UserInputError } from 'apollo-server';
 import { Relationship } from '../sql-models';
 
-const checkNameAvailability = async function({ follower, name }) {
+const checkNameAvailability = async function({ followerId, name }) {
   const followees = await Relationship.query()
     .select('f.name')
-    .where('follower_id', follower.person_id)
+    .where('follower_id', followerId)
     .joinRelated('followees',  { alias: 'f' })
 
   if (followees.find((f) => f.name === name))

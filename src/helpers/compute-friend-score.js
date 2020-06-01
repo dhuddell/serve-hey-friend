@@ -1,7 +1,7 @@
 const computeFriendScore = (goals) => {
   const {
-    currentText, currentPhone, currentBeer,
-    targetText, targetPhone, targetBeer,
+    currentText = 0, currentPhone = 0, currentBeer = 0,
+    targetText = 0, targetPhone = 0, targetBeer = 0,
   } = goals;
 
   const currentTotal = currentText + currentPhone + currentBeer;
