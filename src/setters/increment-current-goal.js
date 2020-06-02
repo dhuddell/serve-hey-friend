@@ -19,8 +19,7 @@ const incrementCurrentGoal = async ({ incrementCurrentGoalInput }, { token }) =>
     .where({ follower_id: initialAccount.person_id, followee_id: friendId }).first()
   if (!initialRelationship) throw new UserInputError('Friend not found');
 
-  const mappedGoalKeys = goalMappers.mapGoalsToDatabase({ goalKey });
-  const mappedGoalKey = Object.keys(mappedGoalKeys)[0];
+  const mappedGoalKey = goalMappers.apiToDatabaseGoalMap[goalKey];
   const updatedGoals = await Goal.query()
     .patch({ [mappedGoalKey]: raw(`${mappedGoalKey} + 1`) })
     .where({ id: initialRelationship.goal_id }).returning('*').first();
