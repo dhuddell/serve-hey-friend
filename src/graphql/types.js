@@ -106,8 +106,7 @@ export default gql`
     addFriendToUser(addFriendInput: AddFriendInput!): Friend
     
     updateUser(updateUserInput: UpdateUserInput!): User
-    # is this what I want to return?
-    updateFriend(updateFriendInput: UpdateFriendInput!): Friend
+    updateFriend(updateFriendInput: UpdateFriendInput!): Friend # is this what I want to return?
     incrementCurrentGoal(incrementCurrentGoalInput: IncrementCurrentGoalInput!): Goals
 
     removeUser(username: String): ConfirmationResponse
