@@ -23,7 +23,7 @@ const getFriend = async ( { username, friendId }, { token } ) => {
     friendId: relationship.followee_id,
     description: relationship.description,
     friendScore: relationship.friend_score,
-    goals: goalMappers.mapGoalsToDatabase(relationship),
+    goals: goalMappers.mapGoalsToApi(relationship),
   }
 
   return friend;
