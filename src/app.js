@@ -27,12 +27,4 @@ app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}/graphql`);
 });
 
-// REMOVE AFTER MONGO IS DED
-import mongoose from 'mongoose';
-mongoose.connect('mongodb://localhost:27017/serve-i-miss-you', {useNewUrlParser: true});
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {});
-// REMOVE AFTER MONGO IS DED
-
 export default app;

@@ -21,7 +21,7 @@ export default gql`
     cadence: String
   }
 
-  input CreateFriendInput {
+  input AddFriendInput {
     username: String!
     name: String!
     icon: String
@@ -103,7 +103,7 @@ export default gql`
     loginUser(loginInput: LoginInput!): AuthResponse
     registerUser(registrationInput: RegistrationInput!): AuthResponse
 
-    addFriendToUser(createFriendInput: CreateFriendInput!): Friend
+    addFriendToUser(addFriendInput: AddFriendInput!): Friend
     
     updateUser(updateUserInput: UpdateUserInput!): User
     # is this what I want to return?
