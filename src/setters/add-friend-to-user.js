@@ -6,14 +6,14 @@ import {
 } from '../helpers';
 import { Account } from '../sql-models';
 
-const addFriendToUser = async ( { createFriendInput }, { token } ) => {
+const addFriendToUser = async ( { addFriendInput }, { token } ) => {
   const {
     username,
     name,
     icon,
     description,
     goals,
-  } = createFriendInput;
+  } = addFriendInput;
 
   authenticateUser(username, token);
 
