@@ -1,30 +1,17 @@
-const computeFriendScore = (currentGoals = {}, targetGoals = {}) => {
-  const currentTotal = sumGoalValues(currentGoals);
-  const targetTotal = sumGoalValues(targetGoals);
+const computeFriendScore = (goals) => {
+  const {
+    currentText = 0, currentPhone = 0, currentBeer = 0,
+    targetText = 0, targetPhone = 0, targetBeer = 0,
+  } = goals;
 
-  console.log('currentGoals')
-  console.log(currentGoals)
-  console.log(currentTotal)
-  console.log('targetGoals')
-  console.log(targetGoals)
-  console.log(targetTotal)
+  const currentTotal = currentText + currentPhone + currentBeer;
+  const targetTotal = targetText + targetPhone + targetBeer;
 
-    // cases: 
-    // current > target
-    // target > current
-    // targets are undefined, null, or 0
-      // (cannot divide, must return 100)
+  const percentOfTarget = Math.ceil((currentTotal / targetTotal) * 100);
+  const friendScore = Math.min(percentOfTarget, 100)
 
-    // current are undefined, null, or 0 
-      // (must return 100)
-
-  const percentOfTarget = currentTotal / targetTotal;
-
-  return percentOfTarget < 1 ? Math.ceil(currentTotal/targetTotal) : 100;
+  console.log(`[: ‡] beep boop computing friend score: ${friendScore}`);
+  return friendScore;
 };
-
-const sumGoalValues = (valueSet) => {
-  return Object.keys(valueSet).reduce((acc, curr) => ( acc += curr ), 100);
-}
 
 export default computeFriendScore;

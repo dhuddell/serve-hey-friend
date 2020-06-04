@@ -1,52 +1,56 @@
-import R from 'ramda';
 import { UserInputError } from 'apollo-server';
-import { authorizeUser, computeFriendScore } from '../helpers';
-import createFriend from './create-friend';
-import UserModel from '../schemas/user-model';
+import { 
+  authenticateUser,
+  insertFriendToDatabase,
+  checkNameAvailability
+} from '../helpers';
+import { Account } from '../sql-models';
 
-const addFriendToUser = async ( requestInput, headers ) => {
-  const { friendInput: {
+const addFriendToUser = async ( { createFriendInput }, { token } ) => {
+  const {
     username,
     name,
     icon,
     description,
-    goalSetCollection
-    } = {}
-  } = requestInput;
+    goals,
+  } = createFriendInput;
 
-  // TODO 3/6/2020 clean up friendInput assignment
+  authenticateUser(username, token);
 
-  const user = await UserModel.findOne({ username })
-  if (!user) throw new UserInputError('User not found');
-  
-  authorizeUser(username, headers.token)
-  
-  const nameIsTaken = user.friends.find((friend) => friend.name === name);
-  if (nameIsTaken) throw new UserInputError('Friend name taken, please choose another name');
-  
-  const currentGoals = R.pathOr({}, ['currentGoals'], goalSetCollection);
-  const targetGoals = R.pathOr({}, ['targetGoals'], goalSetCollection);
-  const cadence = R.pathOr({}, ['cadence'], goalSetCollection);
-  const friendScore = computeFriendScore(currentGoals, targetGoals);
+  const follower = await Account.query()
+    .select('accounts.*', 'p.name')
+    .where('username', username)
+    .joinRelated('persons',  { alias: 'p' })
+    .first()
 
-  const friendInput = {
-    username,
+  if (!follower) throw new UserInputError('User not found');
+  await checkNameAvailability({ followerId: follower.person_id, name });
+
+  const { friendRecord, goalsRecord, relationshipRecord } = await insertFriendToDatabase({
+    goals,
+    followerId: follower.person_id,
     name,
-    icon,
-    friendScore,
     description,
-    goalSetCollection: {
-      currentGoals,
-      targetGoals,
-      cadence
-    },
+    icon
+  })
+
+  return {
+    username,
+    friendId: friendRecord.id,
+    name: friendRecord.name,
+    icon: relationshipRecord.icon,
+    description: relationshipRecord.description,
+    friendScore: goalsRecord.friend_score,
+    goals: {
+      cadence: goalsRecord.cadence,
+      currentText: goalsRecord.current_text,
+      currentPhone: goalsRecord.current_phone,
+      currentBeer: goalsRecord.current_beer,
+      targetText: goalsRecord.target_text,
+      targetPhone: goalsRecord.target_phone,
+      targetBeer: goalsRecord.target_beer,
+    }
   }
-
-  const friendObject = createFriend(friendInput);
-  await user.friends.push(friendObject);
-  await user.save();
-
-  return user.friends.id(friendObject._id);
 };
 
 export default addFriendToUser;

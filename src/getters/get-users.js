@@ -1,9 +1,9 @@
-import UserModel from '../schemas/user-model';
-import { authorizeAny } from '../helpers/authorize-user';
+import { authenticateAny } from '../helpers/authenticate-user';
+import { Account } from '../sql-models';
 
-export default ({ token }) => {
-  authorizeAny(token)
+export default async ({ token }) => {
+  authenticateAny(token)
 
-  const users = UserModel.find({});
+  const users = await Account.query();
   return users;
 };
