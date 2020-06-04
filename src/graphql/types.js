@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
 
-// i just broke all goals stuff.
 export default gql`  
   type Goals {
     currentText: Int
@@ -92,15 +91,6 @@ export default gql`
     friendId: String!
   }
 
-  input UpdateFriendTargetGoalsInput {
-    phone: Int
-    text: Int
-    beer: Int
-    cadence: String
-    username: String!
-    friendId: String!
-  }
-
   type Query {
     user(username: String!): User
     users: [User]
@@ -118,7 +108,6 @@ export default gql`
     updateUser(updateUserInput: UpdateUserInput!): User
     # is this what I want to return?
     updateFriend(updateFriendInput: UpdateFriendInput!): Friend
-    updateFriendTargetGoals(updateFriendTargetGoalsInput: UpdateFriendTargetGoalsInput!): Goals
     incrementCurrentGoal(incrementCurrentGoalInput: IncrementCurrentGoalInput!): Goals
 
     removeUser(username: String): ConfirmationResponse
