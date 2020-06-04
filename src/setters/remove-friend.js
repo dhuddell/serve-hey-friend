@@ -15,18 +15,19 @@ const removeFriend = async ({ username, friendId }, { token }) => {
   if (!relationship) throw new UserInputError('Friendship not found');
 
   try {
-    const transactionResponse = Account.transaction(async (t) => {
+    const transactionResponse = Account.transaction(async (trx) => {
+      // should be able to remove this
       try {
-        await Relationship.query().delete().where({ followee_id: relationship.followee_id })
-        await Goal.query().delete().where({ 'id': relationship.goal_id });
+        await Relationship.query(trx).delete().where({ followee_id: relationship.followee_id })
+        await Goal.query(trx).delete().where({ 'id': relationship.goal_id });
 
-        const person = await Person.query().delete()
+        const person = await Person.query(trx).delete()
           .where({ 'id': relationship.followee_id }).returning('*').first();
 
         return { message: `Removed friend '${person.name}' of user '${username}'.` };
 
       } catch (err) {
-        console.log('Remove friend transation error: ', err);
+        console.log('Remove friend transaction error: ', err);
         throw new UserInputError(err);
       }
     });
@@ -34,7 +35,7 @@ const removeFriend = async ({ username, friendId }, { token }) => {
     return transactionResponse;
 
   } catch (error) {
-    console.log('Remove friend transation error: ', err);
+    console.log('Remove friend transaction error: ', err);
 
     throw new UserInputError(err);
   }

@@ -12,22 +12,22 @@ const removeFriends = async ({ username }, { token }) => {
     .where({ follower_id: account.person_id });
 
   try {
-    const transactionResponse = Account.transaction(async (t) => {
+    const transactionResponse = Account.transaction(async (trx) => {
       try {
-        await Relationship.query().delete().where({ follower_id: account.person_id });
-        await Person.query().delete().whereIn( 'id', relationships.map((r) => r.followee_id));
-        await Goal.query().delete().whereIn('id', relationships.map((r) => r.goal_id));
+        await Relationship.query(trx).delete().where({ follower_id: account.person_id });
+        await Person.query(trx).delete().whereIn( 'id', relationships.map((r) => r.followee_id));
+        await Goal.query(trx).delete().whereIn('id', relationships.map((r) => r.goal_id));
 
         return { message: `Removed friends of user '${username}'.` };
       } catch (err) {
-        console.log('Remove friends transation error: ', err);
+        console.log('Remove friends transaction error: ', err);
         throw new UserInputError(err);
       }
     });
 
     return transactionResponse;
   } catch (error) {
-    console.log('Remove friends transation error: ', err);
+    console.log('Remove friends transaction error: ', err);
     throw new UserInputError(err);
   }
 };

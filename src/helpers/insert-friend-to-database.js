@@ -20,9 +20,9 @@ const insertFriendToDatabase = async ({
   const friendScore = computeFriendScore(goals);
 
   try {
-    const transationResponse = await Person.transaction(async (t) => {
-      const friendRecord = await Person.query().insert({ id: followeeId, name });
-      const goalsRecord = await Goal.query().insert({
+    const transactionResponse = await Person.transaction(async (trx) => {
+      const friendRecord = await Person.query(trx).insert({ id: followeeId, name });
+      const goalsRecord = await Goal.query(trx).insert({
         id: goalId,
         cadence,
         current_text: currentText,
@@ -36,7 +36,7 @@ const insertFriendToDatabase = async ({
 
       // default return is id, but that column
       // doesn't exist so I'm returning followee_id
-      const relationshipRecord = await Relationship.query()
+      const relationshipRecord = await Relationship.query(trx)
         .returning('followee_id')
         .insert({
           followee_id: followeeId,
@@ -49,9 +49,9 @@ const insertFriendToDatabase = async ({
       return { friendRecord, goalsRecord, relationshipRecord };
     });
 
-    return transationResponse
+    return transactionResponse
   } catch (err) {
-    console.log('Transation error: ', err)
+    console.log('Transaction error: ', err)
   }
 }
 

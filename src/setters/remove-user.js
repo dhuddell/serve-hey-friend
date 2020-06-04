@@ -13,10 +13,10 @@ const removeUser = async ({ username }, { token }) => {
 
   try {
     // I dont think transaction is working
-    const transactionResponse = Account.transaction(async (t) => {
+    const transactionResponse = Account.transaction(async (trx) => {
       try {
-        const account = await Account.query().where({ username }).first() || {};
-        const relationshipRecords = await Relationship.query()
+        const account = await Account.query(trx).where({ username }).first() || {};
+        const relationshipRecords = await Relationship.query(trx)
           .delete().where({ follower_id: account.person_id })
           .orWhere({ followee_id: account.person_id }).returning('*') || [];
 
@@ -28,20 +28,20 @@ const removeUser = async ({ username }, { token }) => {
           return accum;
         }, []);
 
-        await Account.query().delete().where({ username })
-        await Person.query().delete().whereIn('id', personIds);
-        await Goal.query().delete().whereIn('id', relationshipRecords.map((r) => r.goal_id));
+        await Account.query(trx).delete().where({ username })
+        await Person.query(trx).delete().whereIn('id', personIds);
+        await Goal.query(trx).delete().whereIn('id', relationshipRecords.map((r) => r.goal_id));
 
         return { message: `Removed user: ${username}` };
       } catch (err) {
-        console.log('Remove user transation error: ', err);
+        console.log('Remove user transaction error: ', err);
         throw new UserInputError(err);
       }
     });
 
     return transactionResponse;
   } catch (err) {
-    console.log('Remove user transation error: ', err);
+    console.log('Remove user transaction error: ', err);
     throw new UserInputError(err);
   }
 
