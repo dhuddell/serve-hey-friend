@@ -87,6 +87,7 @@ export default gql`
 
   input IncrementCurrentGoalInput {
     goalKey: String!
+    goalValue: Int!
     username: String!
     friendId: String!
   }
@@ -107,7 +108,7 @@ export default gql`
     
     updateUser(updateUserInput: UpdateUserInput!): User
     updateFriend(updateFriendInput: UpdateFriendInput!): Friend # is this what I want to return?
-    incrementCurrentGoal(incrementCurrentGoalInput: IncrementCurrentGoalInput!): Goals
+    updateCurrentGoal(incrementCurrentGoalInput: IncrementCurrentGoalInput!): Goals
 
     removeUser(username: String): ConfirmationResponse
     removeUsers(ignoreString: String): ConfirmationResponse

@@ -6,7 +6,7 @@ export { default as removeUser } from './remove-user';
 export { default as removeUsers } from './remove-users';
 
 export { default as updateFriend } from './update-friend';
-export { default as incrementCurrentGoal } from './increment-current-goal';
+export { default as updateCurrentGoal } from './update-current-goal';
 export { default as addFriendToUser } from './add-friend-to-user';
 
 export { default as removeFriend } from './remove-friend';
