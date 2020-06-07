@@ -4,13 +4,13 @@ import authenticateUser from '../helpers/authenticate-user';
 import { goalMappers } from '../helpers';
 import { Account, Relationship, Goal } from '../sql-models';
 
-const udpateCurrentGoal = async ({ incrementCurrentGoalInput }, { token }) => {
+const udpateCurrentGoal = async ({ updateCurrentGoalInput }, { token }) => {
   const {
     username,
     friendId,
     goalKey,
     goalValue
-  } = incrementCurrentGoalInput;
+  } = updateCurrentGoalInput;
 
   authenticateUser(username, token)
   const initialAccount = await Account.query().where({ username }).first()

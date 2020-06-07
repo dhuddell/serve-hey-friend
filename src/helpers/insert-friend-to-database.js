@@ -24,14 +24,14 @@ const insertFriendToDatabase = async ({
       const friendRecord = await Person.query(trx).insert({ id: followeeId, name });
       const goalsRecord = await Goal.query(trx).insert({
         id: goalId,
-        cadence,
-        current_text: currentText,
-        current_phone: currentPhone,
-        current_beer: currentBeer,
-        target_text: targetText,
-        target_phone: targetPhone,
-        target_beer: targetBeer,
-        friend_score: friendScore
+        cadence: cadence || 'Monthly',
+        current_text: currentText || 0,
+        current_phone: currentPhone || 0,
+        current_beer: currentBeer || 0,
+        target_text: targetText || 0,
+        target_phone: targetPhone || 0,
+        target_beer: targetBeer || 0,
+        friend_score: friendScore || 100
       });
 
       // default return is id, but that column
