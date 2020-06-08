@@ -15,7 +15,7 @@ const insertFriendToDatabase = async ({
     targetText, targetPhone, targetBeer, cadence
   } = goals;
 
-  const [ followeeId, goalId ] = R.times(uuid.v4, 2)
+  const [followeeId, goalId] = R.times(uuid.v4, 2)
 
   const friendScore = computeFriendScore(goals);
 
