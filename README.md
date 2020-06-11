@@ -1,2 +1,2 @@
-# serve-imissyou
-server to support i miss you app
+# serve-hey-friend
+server to support hey friend app
