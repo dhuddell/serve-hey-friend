@@ -1,9 +1,9 @@
 export default {
   client: 'postgresql',
   connection: {
-    host : '127.0.0.1',
-    user : 'dan-huddell',
-    password : 'password',
-    database : 'serve-i-miss-you'
-  }
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    host: process.env.GCP_HOST_INSTANCE_CONNECTION_NAME,
+  },
 };

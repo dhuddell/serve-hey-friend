@@ -46,7 +46,7 @@ const updateFriend = async ({ updateFriendInput }, { token }) => {
       return {
         username: initialAccount.username,
         friendId: relationship.followee_id,
-        name: person.name,
+        name: person.name || name || '',
         icon: relationship.icon,
         description: relationship.description,
         friendScore: goalsResponse.friend_score,

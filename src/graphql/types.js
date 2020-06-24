@@ -21,6 +21,11 @@ export default gql`
     cadence: String
   }
 
+  type UpdateGoalResponse {
+    friendScore: Int
+    goals: Goals
+  }
+
   input AddFriendInput {
     username: String!
     name: String!
@@ -85,7 +90,7 @@ export default gql`
     message: String
   }
 
-  input IncrementCurrentGoalInput {
+  input UpdateCurrentGoalInput {
     goalKey: String!
     goalValue: Int!
     username: String!
@@ -107,8 +112,8 @@ export default gql`
     addFriendToUser(addFriendInput: AddFriendInput!): Friend
     
     updateUser(updateUserInput: UpdateUserInput!): User
-    updateFriend(updateFriendInput: UpdateFriendInput!): Friend # is this what I want to return?
-    updateCurrentGoal(incrementCurrentGoalInput: IncrementCurrentGoalInput!): Goals
+    updateFriend(updateFriendInput: UpdateFriendInput!): Friend
+    updateCurrentGoal(updateCurrentGoalInput: UpdateCurrentGoalInput!): UpdateGoalResponse
 
     removeUser(username: String): ConfirmationResponse
     removeUsers(ignoreString: String): ConfirmationResponse

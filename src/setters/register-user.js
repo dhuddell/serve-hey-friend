@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
 import { Account, Person } from '../sql-models';
 
@@ -15,11 +15,11 @@ const registerUser = async ( input ) => {
     'tempi is a dog',
     { expiresIn: '24h' }
   );
-  const personId = uuid.v4();
+  const personId = uuidv4();
 
   await Person.query().insert({ id: personId, name });
   await Account.query().insert({
-    id: uuid.v4(),
+    id: uuidv4(),
     person_id: personId,
     username,
     email,
