@@ -1,7 +1,7 @@
 import { UserInputError } from 'apollo-server';
 import { Relationship } from '../sql-models';
 
-const checkNameAvailability = async function({ followerId, name }) {
+const checkNameAvailability = async ({ followerId, name }) => {
   const followees = await Relationship.query()
     .select('f.name')
     .where('follower_id', followerId)

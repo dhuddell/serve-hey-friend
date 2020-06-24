@@ -1,5 +1,5 @@
 import R from 'ramda';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { computeFriendScore } from '../helpers';
 import { Person, Goal, Relationship } from '../sql-models';
 
@@ -15,7 +15,7 @@ const insertFriendToDatabase = async ({
     targetText, targetPhone, targetBeer, cadence
   } = goals;
 
-  const [followeeId, goalId] = R.times(uuid.v4, 2)
+  const [followeeId, goalId] = R.times(uuidv4, 2)
 
   const friendScore = computeFriendScore(goals);
 

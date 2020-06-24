@@ -8,6 +8,7 @@ const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT || `/graphql`;
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 const server = new ApolloServer({
   schema,
+  introspection: true,
   playground: {
     endpoint: GRAPHQL_ENDPOINT,
     settings: {
