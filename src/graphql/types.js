@@ -58,6 +58,11 @@ export default gql`
     password: String!
   }
 
+  input RemoveFriendInput {
+    username: String!
+    friendId: String!
+  }
+
   input RegistrationInput {
     username: String!
     password: String!
@@ -117,7 +122,7 @@ export default gql`
 
     removeUser(username: String): ConfirmationResponse
     removeUsers(ignoreString: String): ConfirmationResponse
-    removeFriend(username: String, friendId: String!): ConfirmationResponse
+    removeFriend(removeFriendInput: RemoveFriendInput!): ConfirmationResponse
     removeFriends(username: String!): ConfirmationResponse
   }
 `;

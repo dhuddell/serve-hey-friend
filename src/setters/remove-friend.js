@@ -5,7 +5,8 @@ import { Account, Relationship, Person, Goal } from '../sql-models';
 // 5/27/2020
 // TODO: Need to create a trigger to properly order and cascade deletions
 
-const removeFriend = async ({ username, friendId }, { token }) => {
+const removeFriend = async (input, { token }) => {
+  const { username, friendId } = input.removeFriendInput;
   authenticateUser(username, token)
   const account = await Account.query().where({ username }).first() || {};
   const relationship = await Relationship.query()
