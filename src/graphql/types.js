@@ -34,13 +34,18 @@ export default gql`
     goals: GoalsInput
   }
 
-  input UpdateFriendInput {
+  input UpdateFriendGoalsInput {
+    username: String!
+    friendId: String!
+    goals: GoalsInput
+  }
+
+  input UpdateFriendInfoInput {
     username: String!
     friendId: String!
     name: String
     icon: String
     description: String
-    goals: GoalsInput
   }
 
   type Friend {
@@ -117,7 +122,8 @@ export default gql`
     addFriendToUser(addFriendInput: AddFriendInput!): Friend
     
     updateUser(updateUserInput: UpdateUserInput!): User
-    updateFriend(updateFriendInput: UpdateFriendInput!): Friend
+    updateFriendInfo(updateFriendInfoInput: UpdateFriendInfoInput!): Friend
+    updateFriendGoals(updateFriendGoalsInput: UpdateFriendGoalsInput!): Friend
     updateCurrentGoal(updateCurrentGoalInput: UpdateCurrentGoalInput!): UpdateGoalResponse
 
     removeUser(username: String): ConfirmationResponse

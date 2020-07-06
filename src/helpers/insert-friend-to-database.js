@@ -21,6 +21,8 @@ const insertFriendToDatabase = async ({
 
   try {
     const transactionResponse = await Person.transaction(async (trx) => {
+      const friendScoreIsNumber = typeof friendScore !== Number;
+
       const friendRecord = await Person.query(trx).insert({ id: followeeId, name });
       const goalsRecord = await Goal.query(trx).insert({
         id: goalId,
@@ -31,7 +33,7 @@ const insertFriendToDatabase = async ({
         target_text: targetText || 0,
         target_phone: targetPhone || 0,
         target_beer: targetBeer || 0,
-        friend_score: friendScore || 100
+        friend_score: friendScoreIsNumber ? friendScore :  100,
       });
 
       // default return is id, but that column
