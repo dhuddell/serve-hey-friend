@@ -29,7 +29,7 @@ const updateFriendGoals = async ({ updateFriendGoalsInput }, { token }) => {
         friend_score: friendScore
         }).where({ id: initialRelationship.goal_id }).returning('*').first();
 
-        return {
+      return {
         friendId,
         username,
         friendScore: goalsResponse.friend_score,

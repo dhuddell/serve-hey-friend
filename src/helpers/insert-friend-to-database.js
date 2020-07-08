@@ -21,7 +21,7 @@ const insertFriendToDatabase = async ({
 
   try {
     const transactionResponse = await Person.transaction(async (trx) => {
-      const friendScoreIsNumber = typeof friendScore !== Number;
+      const friendScoreIsNumber = typeof friendScore === Number;
 
       const friendRecord = await Person.query(trx).insert({ id: followeeId, name });
       const goalsRecord = await Goal.query(trx).insert({
