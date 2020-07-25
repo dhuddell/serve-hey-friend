@@ -9,7 +9,7 @@ import {
   loginUser,
   registerUser,
   updateUser,
-  addFriendToUser,
+  addFriend,
   updateFriendInfo,
   updateFriendGoals,
   updateCurrentGoal,
@@ -38,7 +38,7 @@ const resolvers = {
     removeUser: (_, args, context) => removeUser(args, context),
     removeUsers: (_, args, context) => removeUsers(args, context),
 
-    addFriendToUser: (_, args, context) => addFriendToUser(args, context),
+    addFriend: (_, args, context) => addFriend(args, context),
     updateCurrentGoal: (_, args, context) => updateCurrentGoal(args, context),
     updateFriendInfo: (_, args, context) => updateFriendInfo(args, context),
     updateFriendGoals: (_, args, context) => updateFriendGoals(args, context),

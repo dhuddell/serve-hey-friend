@@ -8,7 +8,7 @@ export { default as removeUsers } from './remove-users';
 export { default as updateFriendGoals } from './update-friend-goals';
 export { default as updateFriendInfo } from './update-friend-info';
 export { default as updateCurrentGoal } from './update-current-goal';
-export { default as addFriendToUser } from './add-friend-to-user';
+export { default as addFriend } from './add-friend';
 
 export { default as removeFriend } from './remove-friend';
 export { default as removeFriends } from './remove-friends';

@@ -119,7 +119,7 @@ export default gql`
     loginUser(loginInput: LoginInput!): AuthResponse
     registerUser(registrationInput: RegistrationInput!): AuthResponse
 
-    addFriendToUser(addFriendInput: AddFriendInput!): Friend
+    addFriend(addFriendInput: AddFriendInput!): Friend
     
     updateUser(updateUserInput: UpdateUserInput!): User
     updateFriendInfo(updateFriendInfoInput: UpdateFriendInfoInput!): Friend

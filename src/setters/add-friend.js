@@ -6,7 +6,7 @@ import {
 } from '../helpers';
 import { Account } from '../sql-models';
 
-const addFriendToUser = async ( { addFriendInput }, { token } ) => {
+const addFriend = async ( { addFriendInput }, { token } ) => {
   const {
     username,
     name,
@@ -53,4 +53,4 @@ const addFriendToUser = async ( { addFriendInput }, { token } ) => {
   }
 };
 
-export default addFriendToUser;
+export default addFriend;
