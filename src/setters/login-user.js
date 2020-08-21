@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { UserInputError } from 'apollo-server';
-import { Account, Person } from '../sql-models';
+import { Account } from '../sql-models';
 
 const loginUser = async ( input ) => {
   const { username, password } = input.loginInput;
