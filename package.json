@@ -46,7 +46,7 @@
     "graphql-tag": "^2.10.3",
     "graphql-tools": "^6.0.10",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.21.1",
+    "knex": "^2.4.0",
     "nodemon": "^2.0.4",
     "objection": "^2.2.0",
     "pg": "^8.2.1",
